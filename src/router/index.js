@@ -47,31 +47,7 @@ const router = createRouter({
 
       },
     },
-    // {
-    //   path: '/login',
-    //   name: 'login',
-   
-    //   component:LoginComponent,
-    //   meta:{
-    //   requiresGuest:true,
-    //   },
-    // },
-    // {
-    //   path: '/register',
-    //   name: 'register',
-
-    //   component:RegisterComponent,
-    //   meta:{
-    //     requiresGuest:true,
-    //   },
-    // },
-    // {
-    //   path: '/forget',
-    //   name: 'forget',
-
-    //   component:ForgetComponent,
-
-    // },
+    // Auth is handled in Laravel backend (Inertia), not in old frontend routes.
     {
       path: '/servics',
       name: 'servics',

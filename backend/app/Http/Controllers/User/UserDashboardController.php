@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class UserDashboardController extends Controller
+{
+    public function __invoke(Request $request): Response|RedirectResponse
+    {
+        if ($request->user()?->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return Inertia::render('User/Dashboard');
+    }
+}

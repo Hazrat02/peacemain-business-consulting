@@ -520,7 +520,7 @@ export default {
 
           // Change the authenticated value to false
 
-          this.$router.push("/login");
+          this.$router.push("/");
         })
         .catch((error) => {
           this.$setLoading(false);

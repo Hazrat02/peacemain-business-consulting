@@ -4,6 +4,7 @@ import 'vue3-carousel/dist/carousel.css';
 import { setupRouterGuard } from './middleware/index';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { useAuthUserStore } from './stores/user';
 
 import animationDirective from './directives/animationDirective';
 import Toast, { POSITION } from 'vue-toastification';
@@ -33,10 +34,14 @@ const options = {
 
 const app = createApp(App);
 setupRouterGuard(router);
-app.use(createPinia());
+const pinia = createPinia();
+app.use(pinia);
 app.use(router);
 app.use(Toast, options);
 app.directive('animate', animationDirective);
+
+const authStore = useAuthUserStore(pinia);
+authStore.loadUserFromLocalStorage();
 
 // Make toast globally available
 const toast = useToast();

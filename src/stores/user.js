@@ -1,21 +1,50 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 const LOCAL_STORAGE_KEY = 'user_data';
+const TOKEN_STORAGE_KEY = 'auth_token';
 
 export const useAuthUserStore = defineStore('authUser', {
   state: () => ({
     authUser: null,
     allUser:'',
-    refferUser:''
+    refferUser:'',
+    token: null
   }),
   actions: {
 
     isAuthenticated() {
-     return false
+     return !!this.token
     },
     setAuthUser(newUser) {
       this.authUser = newUser;
       this.saveUserToLocalStorage(newUser);
+    },
+    setToken(token) {
+      this.token = token;
+      if (token) {
+        localStorage.setItem(TOKEN_STORAGE_KEY, token);
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      } else {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        delete axios.defaults.headers.common.Authorization;
+      }
+    },
+    async login(payload) {
+      const response = await axios.post('/api/auth/login', payload);
+      this.setToken(response.data.token);
+      this.setAuthUser(response.data.authUser);
+      return response.data;
+    },
+    async register(payload) {
+      const response = await axios.post('/api/auth/register', payload);
+      this.setToken(response.data.token);
+      this.setAuthUser(response.data.authUser);
+      return response.data;
+    },
+    async logout() {
+      await axios.post('/api/auth/logout');
+      this.setToken(null);
+      this.clearAuthUser();
     },
     setAllUser(newUser) {
       this.allUser = newUser;
@@ -75,13 +104,17 @@ export const useAuthUserStore = defineStore('authUser', {
 
 
     clearAuthUser() {
-      this.user = null;
+      this.authUser = null;
       this.saveUserToLocalStorage(null);
     },
     loadUserFromLocalStorage() {
       const savedUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+      const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
       if (savedUser) {
-        this.user = savedUser;
+        this.authUser = savedUser;
+      }
+      if (savedToken) {
+        this.setToken(savedToken);
       }
     },
     saveUserToLocalStorage(user) {

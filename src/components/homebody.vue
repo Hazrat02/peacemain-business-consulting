@@ -24,12 +24,12 @@
                       <div class="buttons">
                         <RouterLink
                           v-if="!authUser"
-                          to="/login"
+                          to="/contact"
                           class="btn2"
                           v-animate
                           data-animation="animated bounceInUp"
                           ><i class="fa fa-user"> </i
-                          ><span> Login</span></RouterLink
+                          ><span> Contact Us</span></RouterLink
                         >
 
                         <div v-if="authUser">

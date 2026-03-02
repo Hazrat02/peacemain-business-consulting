@@ -10,19 +10,20 @@ const state = reactive({
 const authenticatedRef = toRef(state, 'authenticated');
 
 // Check localStorage for token during initialization
-if (localStorage.getItem('token')) {
+if (localStorage.getItem('auth_token')) {
   authenticatedRef.value = true;
 } else {
   authenticatedRef.value = false;
 }
 
 export function logout() {
-  localStorage.clear();
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('user_data');
   authenticatedRef.value = false;
 }
 
 export function login(token) {
-  localStorage.setItem('token', token);
+  localStorage.setItem('auth_token', token);
   authenticatedRef.value = true;
 }
 
@@ -32,36 +33,17 @@ export function isAuthenticated() {
 
 export function setupRouterGuard(router) {
   router.beforeEach((to, from, next) => {
-    const jwtToken = localStorage.getItem('token');
+    const token = localStorage.getItem('auth_token');
 
-    // Function to check if the JWT token is expired
-    function isTokenExpired(token) {
-      const tokenData = JSON.parse(atob(token.split('.')[1]));
-      const expirationTime = tokenData.exp * 1000; // Convert expiration time to milliseconds
-      return Date.now() >= expirationTime;
-    }
-
-    if (jwtToken && isTokenExpired(jwtToken)) {
-      // Clear the localStorage and redirect to the login page
-      localStorage.removeItem('token');
-      logout();
-      next('/login');
+    axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+    if (token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     } else {
-      // Allow navigation to the next route
-      if (to.meta.requiresAuth && !isAuthenticated()) {
-        // Redirect to login page or any other desired route
-        next('/login');
-      } else if (to.meta.requiresGuest && isAuthenticated()) {
-        next('/');
-      } else {
-        // Set default Axios configuration
-        axios.defaults.baseURL = 'https://api.fairlightinvestments.com/';
-        // axios.defaults.baseURL = 'http://127.0.0.1:8000/';
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-        setloading(true); // Set loading to true before navigation
-        next();
-      }
+      delete axios.defaults.headers.common.Authorization;
     }
+
+    setloading(true);
+    next();
   });
 
   // Hook to run after each navigation
