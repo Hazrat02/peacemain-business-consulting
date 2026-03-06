@@ -34,6 +34,48 @@ class TokenAuthController extends Controller
         return Inertia::render('Auth/Register');
     }
 
+    public function showForgotPassword(): Response
+    {
+        return Inertia::render('Auth/ForgotPassword');
+    }
+
+    public function webForgotPassword(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $user = User::query()->where('email', $data['email'])->first();
+        if (! $user) {
+            return back()->with('status', 'If that email exists, a reset code has been sent.');
+        }
+
+        $code = (string) random_int(100000, 999999);
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $data['email']],
+            [
+                'token' => Hash::make($code),
+                'created_at' => now(),
+            ]
+        );
+
+        try {
+            Mail::raw(
+                "Your password reset code is {$code}. It expires in 15 minutes.",
+                function ($message) use ($data): void {
+                    $message->to($data['email'])->subject('Your Password Reset Code');
+                }
+            );
+        } catch (Throwable) {
+            return back()->withErrors([
+                'email' => 'Unable to send reset code email right now.',
+            ]);
+        }
+
+        return back()->with('status', 'Reset code sent. Please check your inbox.');
+    }
+
     public function webLogin(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
@@ -62,13 +104,20 @@ class TokenAuthController extends Controller
             'country' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'profile_image' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $profileImagePath = null;
+        if ($request->hasFile('profile_image')) {
+            $profileImagePath = $request->file('profile_image')->store('profile-images', 'public');
+        }
 
         $user = User::create([
             'name' => $data['full_name'],
             'full_name' => $data['full_name'],
             'phone' => $data['phone'],
             'country' => $data['country'],
+            'profile_image' => $profileImagePath,
             'email' => $data['email'],
             'password' => $data['password'],
             'is_admin' => false,
@@ -98,13 +147,20 @@ class TokenAuthController extends Controller
             'country' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'profile_image' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $profileImagePath = null;
+        if ($request->hasFile('profile_image')) {
+            $profileImagePath = $request->file('profile_image')->store('profile-images', 'public');
+        }
 
         $user = User::create([
             'name' => $data['name'] ?? $data['full_name'],
             'full_name' => $data['full_name'],
             'phone' => $data['phone'],
             'country' => $data['country'],
+            'profile_image' => $profileImagePath,
             'email' => $data['email'],
             'password' => $data['password'],
             'is_admin' => false,

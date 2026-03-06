@@ -13,6 +13,10 @@
     "dependencies": {
         "@inertiajs/vue3": "^2.3.17",
         "@vitejs/plugin-vue": "^6.0.4",
+        "bootstrap": "^5.3.8",
+        "feather-icons": "^4.29.2",
+        "notyf": "^3.10.0",
+        "simplebar": "^6.3.3",
         "vue": "^3.5.29"
     }
 }

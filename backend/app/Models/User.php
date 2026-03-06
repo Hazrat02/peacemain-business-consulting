@@ -22,9 +22,14 @@ class User extends Authenticatable
         'full_name',
         'phone',
         'country',
+        'profile_image',
         'email',
         'password',
         'is_admin',
+    ];
+
+    protected $appends = [
+        'profile_image_url',
     ];
 
     /**
@@ -47,4 +52,13 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'boolean',
     ];
+
+    public function getProfileImageUrlAttribute(): string
+    {
+        if ($this->profile_image) {
+            return asset('storage/' . $this->profile_image);
+        }
+
+        return '/adminkit/img/avatars/avatar.jpg';
+    }
 }

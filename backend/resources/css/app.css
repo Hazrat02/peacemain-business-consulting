@@ -1,0 +1,42 @@
+body > .modal-backdrop,
+body > .offcanvas-backdrop {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.sidebar-dropdown {
+    padding-left: 1.25rem;
+}
+
+.sidebar-dropdown .sidebar-link {
+    font-size: 0.88rem;
+    color: rgba(233, 236, 239, 0.75);
+}
+
+.admin-submenu-toggle {
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: transparent;
+}
+
+.sidebar-submenu-arrow {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-submenu-arrow.open {
+    transform: rotate(90deg);
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    width: 100%;
+}
+
+.form-label.required::after {
+    content: " *";
+    color: #dc3545;
+}

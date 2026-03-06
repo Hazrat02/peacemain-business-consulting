@@ -1,63 +1,107 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import PasswordInput from '../../Components/PasswordInput.vue';
+import { COUNTRIES } from '../../constants/countries';
 
 const form = useForm({
     full_name: '',
     phone: '',
     country: '',
+    profile_image: null,
     email: '',
     password: '',
     password_confirmation: '',
 });
 
+const imagePreview = ref('');
+
+const onImageChange = (event) => {
+    const [file] = event.target.files || [];
+    form.profile_image = file || null;
+    imagePreview.value = file ? URL.createObjectURL(file) : '';
+};
+
 const submit = () => {
-    form.post('/register');
+    form.post('/register', {
+        forceFormData: true,
+    });
 };
 </script>
 
 <template>
     <Head title="Register" />
-    <main style="font-family: Arial, sans-serif; min-height: 100vh; display: grid; place-items: center;">
-        <form
-            @submit.prevent="submit"
-            style="width: 100%; max-width: 480px; border: 1px solid #ddd; border-radius: 8px; padding: 20px;"
-        >
-            <h1 style="margin-top: 0;">Register</h1>
+    <main class="auth-wrapper">
+        <div class="container d-flex flex-column">
+            <div class="row vh-100">
+                <div class="col-sm-11 col-md-9 col-lg-7 col-xl-6 mx-auto d-table h-100">
+                    <div class="d-table-cell align-middle">
+                        <div class="text-center mt-4">
+                            <h1 class="h2">Create Account</h1>
+                            <p class="lead">Start your user dashboard journey</p>
+                        </div>
 
-            <label for="full_name">Full Name</label>
-            <input id="full_name" v-model="form.full_name" type="text" required style="width: 100%; margin-bottom: 10px;" />
-            <p v-if="form.errors.full_name" style="color: #b91c1c;">{{ form.errors.full_name }}</p>
-
-            <label for="phone">Phone</label>
-            <input id="phone" v-model="form.phone" type="text" required style="width: 100%; margin-bottom: 10px;" />
-            <p v-if="form.errors.phone" style="color: #b91c1c;">{{ form.errors.phone }}</p>
-
-            <label for="country">Country</label>
-            <input id="country" v-model="form.country" type="text" required style="width: 100%; margin-bottom: 10px;" />
-            <p v-if="form.errors.country" style="color: #b91c1c;">{{ form.errors.country }}</p>
-
-            <label for="email">Email</label>
-            <input id="email" v-model="form.email" type="email" required style="width: 100%; margin-bottom: 10px;" />
-            <p v-if="form.errors.email" style="color: #b91c1c;">{{ form.errors.email }}</p>
-
-            <label for="password">Password</label>
-            <input id="password" v-model="form.password" type="password" required style="width: 100%; margin-bottom: 10px;" />
-            <p v-if="form.errors.password" style="color: #b91c1c;">{{ form.errors.password }}</p>
-
-            <label for="password_confirmation">Confirm Password</label>
-            <input
-                id="password_confirmation"
-                v-model="form.password_confirmation"
-                type="password"
-                required
-                style="width: 100%; margin-bottom: 10px;"
-            />
-
-            <button type="submit" :disabled="form.processing">Create account</button>
-            <p style="margin-top: 12px;">
-                Already registered?
-                <a href="/login">Login</a>
-            </p>
-        </form>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="m-sm-3">
+                                    <form @submit.prevent="submit">
+                                        <div class="mb-3">
+                                            <label class="form-label required">Full Name</label>
+                                            <input v-model="form.full_name" class="form-control form-control-lg" type="text" placeholder="John Doe" required />
+                                            <div v-if="form.errors.full_name" class="text-danger mt-1">{{ form.errors.full_name }}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label required">Phone</label>
+                                            <input v-model="form.phone" class="form-control form-control-lg" type="text" placeholder="+1 555 123 4567" required />
+                                            <div v-if="form.errors.phone" class="text-danger mt-1">{{ form.errors.phone }}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label required">Country</label>
+                                            <select v-model="form.country" class="form-select form-select-lg" required>
+                                                <option value="" disabled>Select your country</option>
+                                                <option v-for="country in COUNTRIES" :key="country" :value="country">{{ country }}</option>
+                                            </select>
+                                            <div v-if="form.errors.country" class="text-danger mt-1">{{ form.errors.country }}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Profile Image</label>
+                                            <input class="form-control form-control-lg" type="file" accept="image/*" @change="onImageChange" />
+                                            <div v-if="form.errors.profile_image" class="text-danger mt-1">{{ form.errors.profile_image }}</div>
+                                            <div v-if="imagePreview" class="mt-2">
+                                                <img :src="imagePreview" alt="Profile preview" class="rounded" style="width: 80px; height: 80px; object-fit: cover;" />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label required">Email</label>
+                                            <input v-model="form.email" class="form-control form-control-lg" type="email" placeholder="you@example.com" required />
+                                            <div v-if="form.errors.email" class="text-danger mt-1">{{ form.errors.email }}</div>
+                                        </div>
+                                        <PasswordInput
+                                            v-model="form.password"
+                                            label="Password"
+                                            input-class="form-control form-control-lg"
+                                            placeholder="Create a strong password"
+                                            :required="true"
+                                            :error="form.errors.password"
+                                        />
+                                        <PasswordInput
+                                            v-model="form.password_confirmation"
+                                            label="Confirm Password"
+                                            input-class="form-control form-control-lg"
+                                            placeholder="Re-enter password"
+                                            :required="true"
+                                        />
+                                        <div class="d-grid gap-2 mt-3">
+                                            <button class="btn btn-lg btn-primary" type="submit" :disabled="form.processing">Create account</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">Already registered? <Link href="/login">Login</Link></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
