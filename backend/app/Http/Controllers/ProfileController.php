@@ -24,6 +24,9 @@ class ProfileController extends Controller
                 'email' => $request->user()->email,
                 'phone' => $request->user()->phone,
                 'country' => $request->user()->country,
+                'marital_status' => $request->user()->marital_status,
+                'passport_type' => $request->user()->passport_type,
+                'destination_country' => $request->user()->destination_country,
                 'profile_image_url' => $request->user()->profile_image_url,
             ],
         ]);
@@ -37,6 +40,9 @@ class ProfileController extends Controller
                 'email' => $request->user()->email,
                 'phone' => $request->user()->phone,
                 'country' => $request->user()->country,
+                'marital_status' => $request->user()->marital_status,
+                'passport_type' => $request->user()->passport_type,
+                'destination_country' => $request->user()->destination_country,
                 'profile_image_url' => $request->user()->profile_image_url,
             ],
         ]);
@@ -77,6 +83,9 @@ class ProfileController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $request->user()->id],
             'phone' => ['nullable', 'string', 'max:50'],
             'country' => ['nullable', 'string', 'max:100'],
+            'marital_status' => ['nullable', 'string', 'max:30'],
+            'passport_type' => ['nullable', 'string', 'max:50'],
+            'destination_country' => ['nullable', 'string', 'max:100'],
             'profile_image' => ['nullable', 'image', 'max:2048'],
         ]);
 

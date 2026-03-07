@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::naJV9Z6zBE1ZHVTH',
+            '_route' => 'generated::SDwRcd7DZ0X4JoU1',
           ),
           1 => NULL,
           2 => 
@@ -122,7 +122,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ljaeS6rjJjq6Ui8t',
+            '_route' => 'generated::4CT5TJt8kiIHZ30M',
           ),
           1 => NULL,
           2 => 
@@ -141,7 +141,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::dx7lyblH8vPV59tk',
+            '_route' => 'generated::g8UbixD8DfAsaC7Y',
           ),
           1 => NULL,
           2 => 
@@ -160,7 +160,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::hkeKsLPB69UCu2gF',
+            '_route' => 'generated::sDCrtdlxzr4Gt1JZ',
           ),
           1 => NULL,
           2 => 
@@ -179,7 +179,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::DpEP1kH7xAE7lWeD',
+            '_route' => 'generated::jCsB9Q25SeNHaaHs',
           ),
           1 => NULL,
           2 => 
@@ -198,7 +198,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::73ltYjPYPKsSjHeq',
+            '_route' => 'generated::BJIxMOcaefi7astg',
           ),
           1 => NULL,
           2 => 
@@ -217,7 +217,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::vumD2tLpY2lJpvcB',
+            '_route' => 'generated::zFmgg6TVPRtWIZRn',
           ),
           1 => NULL,
           2 => 
@@ -236,7 +236,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::lhVR8Zf6QfcCQXO3',
+            '_route' => 'generated::MKVipVOmg6foCPuw',
           ),
           1 => NULL,
           2 => 
@@ -255,7 +255,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::UXgAQwpl7SiezLg4',
+            '_route' => 'generated::MaEdr9z3hfQxcsAA',
           ),
           1 => NULL,
           2 => 
@@ -275,7 +275,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::YQWQUxgL3GaHyib4',
+            '_route' => 'generated::UZFEopQzgIcFeJ9t',
           ),
           1 => NULL,
           2 => 
@@ -423,7 +423,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::UTlhwkz9lPpIfwL3',
+            '_route' => 'generated::upsQygK1yZNydA5N',
           ),
           1 => NULL,
           2 => 
@@ -440,7 +440,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::L51lX3v30rxXBhC3',
+            '_route' => 'generated::ek8Uob9LRITMHjvm',
           ),
           1 => NULL,
           2 => 
@@ -478,7 +478,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::dPBR0jQADmZJBCJy',
+            '_route' => 'generated::TAq6wu1NVJDbJ6m2',
           ),
           1 => NULL,
           2 => 
@@ -841,12 +841,317 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/admin/documents' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/documents/sections' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.sections.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/documents/master' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.master.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/document-checklists' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.user-checklists',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
     ),
     2 => 
     array (
+      0 => '{^(?|/dashboard/documents/([^/]++)/submissions(*:48)|/admin/document(?|s/(?|sections/([^/]++)(?|/rules(*:104)|(*:112))|master/([^/]++)(?|(*:139)|/rules(*:153))|rules/([^/]++)(*:176))|\\-checklists/([^/]++)(?|(*:209)|/review(*:224))))/?$}sDu',
     ),
     3 => 
     array (
+      48 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'user.documents.submissions.store',
+          ),
+          1 => 
+          array (
+            0 => 'requirement',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      104 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.sections.rules',
+          ),
+          1 => 
+          array (
+            0 => 'section',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      112 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.sections.update',
+          ),
+          1 => 
+          array (
+            0 => 'section',
+          ),
+          2 => 
+          array (
+            'PATCH' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.sections.delete',
+          ),
+          1 => 
+          array (
+            0 => 'section',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      139 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.master.update',
+          ),
+          1 => 
+          array (
+            0 => 'document',
+          ),
+          2 => 
+          array (
+            'PATCH' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.master.delete',
+          ),
+          1 => 
+          array (
+            0 => 'document',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      153 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.rules.store',
+          ),
+          1 => 
+          array (
+            0 => 'document',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      176 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.rules.delete',
+          ),
+          1 => 
+          array (
+            0 => 'rule',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      209 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.user-checklists.show',
+          ),
+          1 => 
+          array (
+            0 => 'user',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      224 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'admin.documents.user-checklists.review',
+          ),
+          1 => 
+          array (
+            0 => 'requirement',
+          ),
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => NULL,
+          1 => NULL,
+          2 => NULL,
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => 0,
+        ),
+      ),
     ),
     4 => NULL,
   ),
@@ -998,7 +1303,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::naJV9Z6zBE1ZHVTH' => 
+    'generated::SDwRcd7DZ0X4JoU1' => 
     array (
       'methods' => 
       array (
@@ -1021,7 +1326,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::naJV9Z6zBE1ZHVTH',
+        'as' => 'generated::SDwRcd7DZ0X4JoU1',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1037,7 +1342,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::ljaeS6rjJjq6Ui8t' => 
+    'generated::4CT5TJt8kiIHZ30M' => 
     array (
       'methods' => 
       array (
@@ -1057,7 +1362,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::ljaeS6rjJjq6Ui8t',
+        'as' => 'generated::4CT5TJt8kiIHZ30M',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1073,7 +1378,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::dx7lyblH8vPV59tk' => 
+    'generated::g8UbixD8DfAsaC7Y' => 
     array (
       'methods' => 
       array (
@@ -1093,7 +1398,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::dx7lyblH8vPV59tk',
+        'as' => 'generated::g8UbixD8DfAsaC7Y',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1109,7 +1414,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::hkeKsLPB69UCu2gF' => 
+    'generated::sDCrtdlxzr4Gt1JZ' => 
     array (
       'methods' => 
       array (
@@ -1129,7 +1434,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::hkeKsLPB69UCu2gF',
+        'as' => 'generated::sDCrtdlxzr4Gt1JZ',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1145,7 +1450,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::DpEP1kH7xAE7lWeD' => 
+    'generated::jCsB9Q25SeNHaaHs' => 
     array (
       'methods' => 
       array (
@@ -1165,7 +1470,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::DpEP1kH7xAE7lWeD',
+        'as' => 'generated::jCsB9Q25SeNHaaHs',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1181,7 +1486,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::73ltYjPYPKsSjHeq' => 
+    'generated::BJIxMOcaefi7astg' => 
     array (
       'methods' => 
       array (
@@ -1201,7 +1506,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::73ltYjPYPKsSjHeq',
+        'as' => 'generated::BJIxMOcaefi7astg',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1217,7 +1522,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::vumD2tLpY2lJpvcB' => 
+    'generated::zFmgg6TVPRtWIZRn' => 
     array (
       'methods' => 
       array (
@@ -1238,7 +1543,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::vumD2tLpY2lJpvcB',
+        'as' => 'generated::zFmgg6TVPRtWIZRn',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1254,7 +1559,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::lhVR8Zf6QfcCQXO3' => 
+    'generated::MKVipVOmg6foCPuw' => 
     array (
       'methods' => 
       array (
@@ -1275,7 +1580,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::lhVR8Zf6QfcCQXO3',
+        'as' => 'generated::MKVipVOmg6foCPuw',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1291,7 +1596,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::UXgAQwpl7SiezLg4' => 
+    'generated::MaEdr9z3hfQxcsAA' => 
     array (
       'methods' => 
       array (
@@ -1313,7 +1618,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::UXgAQwpl7SiezLg4',
+        'as' => 'generated::MaEdr9z3hfQxcsAA',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1329,7 +1634,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::YQWQUxgL3GaHyib4' => 
+    'generated::UZFEopQzgIcFeJ9t' => 
     array (
       'methods' => 
       array (
@@ -1351,7 +1656,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::YQWQUxgL3GaHyib4',
+        'as' => 'generated::UZFEopQzgIcFeJ9t',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1630,7 +1935,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::UTlhwkz9lPpIfwL3' => 
+    'generated::upsQygK1yZNydA5N' => 
     array (
       'methods' => 
       array (
@@ -1652,7 +1957,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::UTlhwkz9lPpIfwL3',
+        'as' => 'generated::upsQygK1yZNydA5N',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1668,7 +1973,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::L51lX3v30rxXBhC3' => 
+    'generated::ek8Uob9LRITMHjvm' => 
     array (
       'methods' => 
       array (
@@ -1689,7 +1994,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::L51lX3v30rxXBhC3',
+        'as' => 'generated::ek8Uob9LRITMHjvm',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1742,7 +2047,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::dPBR0jQADmZJBCJy' => 
+    'generated::TAq6wu1NVJDbJ6m2' => 
     array (
       'methods' => 
       array (
@@ -1763,7 +2068,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::dPBR0jQADmZJBCJy',
+        'as' => 'generated::TAq6wu1NVJDbJ6m2',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1840,6 +2145,43 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'user.documents',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'user.documents.submissions.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'dashboard/documents/{requirement}/submissions',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => '\\App\\Http\\Controllers\\User\\UserDocumentController@store',
+        'controller' => '\\App\\Http\\Controllers\\User\\UserDocumentController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'user.documents.submissions.store',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2456,6 +2798,504 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'admin.settings',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/documents',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@index',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@index',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.sections.rules' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/documents/sections/{section}/rules',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@sectionRules',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@sectionRules',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.sections.rules',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.sections.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/documents/sections',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@storeSection',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@storeSection',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.sections.store',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.sections.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PATCH',
+      ),
+      'uri' => 'admin/documents/sections/{section}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@updateSection',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@updateSection',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.sections.update',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.sections.delete' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'admin/documents/sections/{section}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@deleteSection',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@deleteSection',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.sections.delete',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.master.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/documents/master',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@storeDocument',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@storeDocument',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.master.store',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.master.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PATCH',
+      ),
+      'uri' => 'admin/documents/master/{document}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@updateDocument',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@updateDocument',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.master.update',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.master.delete' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'admin/documents/master/{document}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@deleteDocument',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@deleteDocument',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.master.delete',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.rules.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/documents/master/{document}/rules',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@storeRule',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@storeRule',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.rules.store',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.rules.delete' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'admin/documents/rules/{rule}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@deleteRule',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@deleteRule',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.rules.delete',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.user-checklists' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/document-checklists',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@userChecklists',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@userChecklists',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.user-checklists',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.user-checklists.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/document-checklists/{user}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@showUserChecklist',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@showUserChecklist',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.user-checklists.show',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'admin.documents.user-checklists.review' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'admin/document-checklists/{requirement}/review',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@reviewSubmission',
+        'controller' => 'App\\Http\\Controllers\\Admin\\AdminDocumentController@reviewSubmission',
+        'namespace' => NULL,
+        'prefix' => '/admin',
+        'where' => 
+        array (
+        ),
+        'as' => 'admin.documents.user-checklists.review',
       ),
       'fallback' => false,
       'defaults' => 

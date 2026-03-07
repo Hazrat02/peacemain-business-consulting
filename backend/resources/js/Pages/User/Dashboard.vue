@@ -44,6 +44,26 @@ defineProps({
 
         <div class="card">
             <div class="card-body">
+                <h5 class="card-title">Document Completion</h5>
+                <div class="progress mb-2" style="height: 10px;">
+                    <div
+                        class="progress-bar"
+                        role="progressbar"
+                        :style="{ width: `${stats.completion_percentage}%` }"
+                        :aria-valuenow="stats.completion_percentage"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                    ></div>
+                </div>
+                <p class="mb-0">
+                    {{ stats.completion_percentage }}% complete
+                    (Approved + Waived: {{ stats.approved_documents + stats.waived_documents }} / {{ stats.required_documents }})
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
                 <h5 class="card-title">Welcome</h5>
                 <p class="mb-0">Track your documents and overseas applications from the left menu.</p>
             </div>

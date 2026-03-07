@@ -8,6 +8,9 @@ const form = useForm({
     full_name: '',
     phone: '',
     country: '',
+    destination_country: '',
+    marital_status: '',
+    passport_type: '',
     profile_image: null,
     email: '',
     password: '',
@@ -62,6 +65,25 @@ const submit = () => {
                                                 <option v-for="country in COUNTRIES" :key="country" :value="country">{{ country }}</option>
                                             </select>
                                             <div v-if="form.errors.country" class="text-danger mt-1">{{ form.errors.country }}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Destination Country</label>
+                                            <input v-model="form.destination_country" class="form-control form-control-lg" type="text" placeholder="Canada" />
+                                            <div v-if="form.errors.destination_country" class="text-danger mt-1">{{ form.errors.destination_country }}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Marital Status</label>
+                                            <select v-model="form.marital_status" class="form-select form-select-lg">
+                                                <option value="">Select marital status</option>
+                                                <option value="single">Single</option>
+                                                <option value="married">Married</option>
+                                            </select>
+                                            <div v-if="form.errors.marital_status" class="text-danger mt-1">{{ form.errors.marital_status }}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Passport Type</label>
+                                            <input v-model="form.passport_type" class="form-control form-control-lg" type="text" placeholder="Regular" />
+                                            <div v-if="form.errors.passport_type" class="text-danger mt-1">{{ form.errors.passport_type }}</div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Profile Image</label>

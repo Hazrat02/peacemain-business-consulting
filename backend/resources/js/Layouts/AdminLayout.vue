@@ -8,6 +8,7 @@ const currentUrl = computed(() => (page.url || '').split('?')[0]);
 const avatarSrc = computed(() => page.props.auth?.user?.profile_image_url || '/adminkit/img/avatars/avatar.jpg');
 
 const isExact = (url) => currentUrl.value === url;
+const isPrefix = (url) => currentUrl.value.startsWith(url);
 
 const logout = () => {
     logoutForm.post('/logout');
@@ -75,6 +76,19 @@ const logout = () => {
                     <li class="sidebar-item" :class="{ active: isExact('/admin/settings') }">
                         <Link class="sidebar-link" href="/admin/settings">
                             <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
+                        </Link>
+                    </li>
+
+                    <li class="sidebar-header">Documents</li>
+
+                    <li class="sidebar-item" :class="{ active: isPrefix('/admin/documents') }">
+                        <Link class="sidebar-link" href="/admin/documents">
+                            <i class="align-middle" data-feather="folder"></i> <span class="align-middle">Master Checklist</span>
+                        </Link>
+                    </li>
+                    <li class="sidebar-item" :class="{ active: isExact('/admin/document-checklists') }">
+                        <Link class="sidebar-link" href="/admin/document-checklists">
+                            <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">User Reviews</span>
                         </Link>
                     </li>
                 </ul>

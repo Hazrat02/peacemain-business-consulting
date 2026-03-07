@@ -17,6 +17,9 @@ const profileForm = useForm({
     email: props.user.email || '',
     phone: props.user.phone || '',
     country: props.user.country || '',
+    destination_country: props.user.destination_country || '',
+    marital_status: props.user.marital_status || '',
+    passport_type: props.user.passport_type || '',
     profile_image: null,
 });
 
@@ -89,6 +92,25 @@ const submitPassword = () => {
                                     <option v-for="country in COUNTRIES" :key="country" :value="country">{{ country }}</option>
                                 </select>
                                 <div v-if="profileForm.errors.country" class="text-danger mt-1">{{ profileForm.errors.country }}</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Destination Country</label>
+                                <input v-model="profileForm.destination_country" class="form-control" type="text" placeholder="Canada" />
+                                <div v-if="profileForm.errors.destination_country" class="text-danger mt-1">{{ profileForm.errors.destination_country }}</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Marital Status</label>
+                                <select v-model="profileForm.marital_status" class="form-select">
+                                    <option value="">Select status</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                </select>
+                                <div v-if="profileForm.errors.marital_status" class="text-danger mt-1">{{ profileForm.errors.marital_status }}</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Passport Type</label>
+                                <input v-model="profileForm.passport_type" class="form-control" type="text" placeholder="Regular" />
+                                <div v-if="profileForm.errors.passport_type" class="text-danger mt-1">{{ profileForm.errors.passport_type }}</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Profile Image</label>

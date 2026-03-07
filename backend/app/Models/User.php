@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -22,6 +23,9 @@ class User extends Authenticatable
         'full_name',
         'phone',
         'country',
+        'marital_status',
+        'passport_type',
+        'destination_country',
         'profile_image',
         'email',
         'password',
@@ -52,6 +56,16 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'boolean',
     ];
+
+    public function requiredDocuments(): HasMany
+    {
+        return $this->hasMany(UserRequiredDocument::class);
+    }
+
+    public function documentSubmissions(): HasMany
+    {
+        return $this->hasMany(DocumentSubmission::class);
+    }
 
     public function getProfileImageUrlAttribute(): string
     {
