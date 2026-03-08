@@ -90,18 +90,4 @@ class UserDashboardController extends Controller
             'progress' => $progress,
         ]);
     }
-
-    public function overseas(Request $request): Response|RedirectResponse
-    {
-        if ($request->user()?->is_admin) {
-            return redirect()->route('admin.dashboard');
-        }
-
-        return Inertia::render('User/Overseas', [
-            'applications' => [
-                ['country' => 'Canada', 'program' => 'PG Diploma', 'intake' => 'Fall 2026', 'status' => 'Under Review'],
-                ['country' => 'Australia', 'program' => 'MBA', 'intake' => 'Spring 2027', 'status' => 'Submitted'],
-            ],
-        ]);
-    }
 }

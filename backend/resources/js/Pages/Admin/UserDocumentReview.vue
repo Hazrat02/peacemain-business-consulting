@@ -93,7 +93,7 @@ const statusBadge = (status) => {
                             </td>
                             <td>
                                 <template v-if="item.latest_submission">
-                                    <a :href="item.latest_submission.file_url" target="_blank" rel="noopener">
+                                    <a :href="item.latest_submission.file_url">
                                         {{ item.latest_submission.file_name }}
                                     </a>
                                     <div class="small text-muted">
@@ -108,7 +108,8 @@ const statusBadge = (status) => {
                             <td>
                                 <ul class="mb-0">
                                     <li v-for="history in item.history" :key="history.id" class="small">
-                                        v{{ history.version }} - {{ history.review_status }}
+                                        <a :href="history.file_url">{{ history.file_name }}</a>
+                                        <span class="text-muted"> | v{{ history.version }} - {{ history.review_status }}</span>
                                     </li>
                                 </ul>
                             </td>
@@ -141,4 +142,3 @@ const statusBadge = (status) => {
         </div>
     </AdminLayout>
 </template>
-

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
 
 class DocumentSubmission extends Model
 {
@@ -20,12 +19,16 @@ class DocumentSubmission extends Model
         'file_size',
         'mime_type',
         'review_status',
+        'is_seen',
+        'seen_at',
         'review_note',
         'reviewed_by',
         'reviewed_at',
     ];
 
     protected $casts = [
+        'is_seen' => 'boolean',
+        'seen_at' => 'datetime',
         'reviewed_at' => 'datetime',
     ];
 
@@ -50,7 +53,6 @@ class DocumentSubmission extends Model
 
     public function getFileUrlAttribute(): string
     {
-        return Storage::disk('public')->url($this->file_path);
+        return route('documents.submissions.download', ['submission' => $this->id]);
     }
 }
-

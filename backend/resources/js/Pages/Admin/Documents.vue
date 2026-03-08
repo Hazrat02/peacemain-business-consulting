@@ -122,8 +122,59 @@ const deleteSection = (sectionId) => {
                             <button type="submit" class="btn btn-primary" :disabled="sectionForm.processing">Create Section</button>
                         </form>
 
-                        <hr class="my-3" />
-                        <h6 class="mb-2">Docs Section Manage</h6>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Add Master Document</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-2" @submit.prevent="submitDocument">
+                            <div class="col-md-4">
+                                <label class="form-label">Section</label>
+                                <select v-model="documentForm.document_section_id" class="form-select" required>
+                                    <option value="">Select section</option>
+                                    <option v-for="section in sections" :key="section.id" :value="section.id">{{ section.name }}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label">Title</label>
+                                <input v-model="documentForm.title" type="text" class="form-control" required />
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label">Description</label>
+                                <input v-model="documentForm.description" type="text" class="form-control" />
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Required</label>
+                                <select v-model="documentForm.is_required" class="form-select">
+                                    <option :value="true">Yes</option>
+                                    <option :value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Sort</label>
+                                <input v-model.number="documentForm.sort_order" type="number" min="0" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary" :disabled="documentForm.processing">Add Document</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Docs Section Manage</h5>
+                    </div>
+                    <div class="card-body">
                         <div v-if="sections.length === 0" class="text-muted small">No sections added yet.</div>
                         <template v-else>
                             <div v-for="section in sections" :key="section.id" class="border rounded p-2 mb-2">
@@ -182,50 +233,13 @@ const deleteSection = (sectionId) => {
                                 </form>
                             </div>
                         </template>
+
+                        
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-8">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Add Master Document</h5>
-                    </div>
-                    <div class="card-body">
-                        <form class="row g-2" @submit.prevent="submitDocument">
-                            <div class="col-md-4">
-                                <label class="form-label">Section</label>
-                                <select v-model="documentForm.document_section_id" class="form-select" required>
-                                    <option value="">Select section</option>
-                                    <option v-for="section in sections" :key="section.id" :value="section.id">{{ section.name }}</option>
-                                </select>
-                            </div>
-                            <div class="col-md-8">
-                                <label class="form-label">Title</label>
-                                <input v-model="documentForm.title" type="text" class="form-control" required />
-                            </div>
-                            <div class="col-md-8">
-                                <label class="form-label">Description</label>
-                                <input v-model="documentForm.description" type="text" class="form-control" />
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Required</label>
-                                <select v-model="documentForm.is_required" class="form-select">
-                                    <option :value="true">Yes</option>
-                                    <option :value="false">No</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Sort</label>
-                                <input v-model.number="documentForm.sort_order" type="number" min="0" class="form-control" />
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary" :disabled="documentForm.processing">Add Document</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </AdminLayout>
 </template>

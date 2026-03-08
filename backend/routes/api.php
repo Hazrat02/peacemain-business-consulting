@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\SiteContentController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Auth\TokenAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,13 @@ Route::post('/auth/login', [TokenAuthController::class, 'login']);
 Route::post('/auth/forgot-password/request', [TokenAuthController::class, 'requestPasswordResetCode']);
 Route::post('/auth/forgot-password/verify', [TokenAuthController::class, 'verifyPasswordResetCode']);
 Route::post('/auth/forgot-password/reset', [TokenAuthController::class, 'resetPasswordWithCode']);
+Route::get('/content/banner', [SiteContentController::class, 'banner']);
+Route::get('/content/sidebar', [SiteContentController::class, 'sidebar']);
+Route::get('/content/faq', [SiteContentController::class, 'faq']);
+Route::get('/content/contact-info', [SiteContentController::class, 'contactInfo']);
+Route::get('/content/general-settings', [SiteContentController::class, 'generalSettings']);
+Route::get('/contact.us', [ContactController::class, 'info']);
+Route::post('/contact.store', [ContactController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/me', [TokenAuthController::class, 'me']);

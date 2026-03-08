@@ -200,14 +200,68 @@ class AdminDocumentController extends Controller
             $rows = $rows->filter(fn (array $row) => (int) $row['progress']['completion_percentage'] >= (int) $filters['completion'])->values();
         }
 
+        $countries = User::query()
+            ->where('is_admin', false)
+            ->whereNotNull('country')
+            ->where('country', '!=', '')
+            ->distinct()
+            ->orderBy('country')
+            ->pluck('country')
+            ->values();
+
         return Inertia::render('Admin/UserDocuments', [
             'users' => $rows,
+            'countries' => $countries,
             'filters' => [
                 'country' => $filters['country'] ?? '',
                 'status' => $filters['status'] ?? '',
                 'completion' => isset($filters['completion']) ? (string) $filters['completion'] : '',
             ],
         ]);
+    }
+
+    public function recentDocs(Request $request): Response
+    {
+        $submissions = DocumentSubmission::query()
+            ->with([
+                'user:id,full_name,email',
+                'requiredDocument.document:id,title',
+            ])
+            ->latest('id')
+            ->paginate(50)
+            ->withQueryString()
+            ->through(function (DocumentSubmission $submission): array {
+                return [
+                    'id' => $submission->id,
+                    'user' => [
+                        'id' => $submission->user?->id,
+                        'full_name' => $submission->user?->full_name,
+                        'email' => $submission->user?->email,
+                    ],
+                    'document_title' => $submission->requiredDocument?->document?->title,
+                    'file_name' => $submission->file_name,
+                    'file_url' => $submission->file_url,
+                    'version' => $submission->version,
+                    'review_status' => $submission->review_status,
+                    'created_at' => optional($submission->created_at)->toDateTimeString(),
+                ];
+            });
+
+        return Inertia::render('Admin/RecentDocs', [
+            'submissions' => $submissions,
+        ]);
+    }
+
+    public function markSubmissionSeen(DocumentSubmission $submission): RedirectResponse
+    {
+        if (! $submission->is_seen) {
+            $submission->update([
+                'is_seen' => true,
+                'seen_at' => now(),
+            ]);
+        }
+
+        return back()->with('status', 'Notification marked as seen.');
     }
 
     public function showUserChecklist(User $user, DocumentChecklistService $service): Response

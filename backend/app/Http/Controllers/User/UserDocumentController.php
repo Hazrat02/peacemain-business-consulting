@@ -8,6 +8,8 @@ use App\Models\UserRequiredDocument;
 use App\Services\DocumentChecklistService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserDocumentController extends Controller
 {
@@ -19,6 +21,12 @@ class UserDocumentController extends Controller
 
         abort_unless((int) $requirement->user_id === (int) $request->user()->id, 403);
 
+        if ($requirement->status === DocumentChecklistService::STATUS_APPROVED) {
+            return back()->withErrors([
+                'file' => 'Approved document cannot be re-uploaded.',
+            ]);
+        }
+
         $data = $request->validate([
             'file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png,doc,docx', 'max:5120'],
         ]);
@@ -26,10 +34,9 @@ class UserDocumentController extends Controller
         $nextVersion = ((int) $requirement->submissions()->max('version')) + 1;
         $file = $data['file'];
 
-        $storedPath = $file->store(
-            sprintf('documents/%d/%d', $request->user()->id, $requirement->document_id),
-            'public'
-        );
+        $directory = sprintf('documents/%d/%d', $request->user()->id, $requirement->document_id);
+        $randomStoredName = $file->hashName();
+        $storedPath = $file->storeAs($directory, $randomStoredName, 'public');
 
         $submission = DocumentSubmission::query()->create([
             'user_required_document_id' => $requirement->id,
@@ -49,5 +56,21 @@ class UserDocumentController extends Controller
         ]);
 
         return back()->with('status', 'Document uploaded successfully.');
+    }
+
+    public function download(Request $request, DocumentSubmission $submission): StreamedResponse
+    {
+        $user = $request->user();
+
+        $isOwner = (int) $submission->user_id === (int) $user->id;
+        $isAdmin = (bool) $user->is_admin;
+
+        abort_unless($isOwner || $isAdmin, 403);
+        abort_unless(Storage::disk('public')->exists($submission->file_path), 404);
+
+        return Storage::disk('public')->download(
+            $submission->file_path,
+            $submission->file_name
+        );
     }
 }

@@ -92,6 +92,15 @@ class TokenAuthController extends Controller
         $request->session()->regenerate();
         /** @var User $user */
         $user = $request->user();
+        if ($user->is_banned) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account has been banned. Please contact support.',
+            ]);
+        }
 
         return redirect()->intended(route($this->dashboardRouteFor($user)));
     }
@@ -202,6 +211,12 @@ class TokenAuthController extends Controller
 
         /** @var User $user */
         $user = $request->user();
+        if ($user->is_banned) {
+            Auth::guard('web')->logout();
+            throw ValidationException::withMessages([
+                'email' => 'Your account has been banned. Please contact support.',
+            ]);
+        }
         $user->tokens()->delete();
         $token = $user->createToken('api-token')->plainTextToken;
 

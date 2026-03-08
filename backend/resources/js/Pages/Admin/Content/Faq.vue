@@ -1,8 +1,9 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3';
 import AdminLayout from '../../../Layouts/AdminLayout.vue';
+import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     faqs: {
         type: Array,
         required: true,
@@ -10,10 +11,69 @@ defineProps({
 });
 
 const form = useForm({
+    items: props.faqs.length
+        ? props.faqs.map((item) => ({
+            question: item.question ?? '',
+            answer: item.answer ?? '',
+            category: item.category ?? 'General',
+            status: item.status ?? 'Published',
+        }))
+        : [],
     question: '',
     answer: '',
     category: 'General',
+    status: 'Published',
 });
+
+const submitting = ref(false);
+const editingIndex = ref(null);
+
+const addFaq = () => {
+    const payload = {
+        question: form.question,
+        answer: form.answer,
+        category: form.category,
+        status: form.status,
+    };
+
+    if (editingIndex.value !== null) {
+        form.items[editingIndex.value] = payload;
+    } else {
+        form.items.push(payload);
+    }
+
+    form.question = '';
+    form.answer = '';
+    form.category = 'General';
+    form.status = 'Published';
+    editingIndex.value = null;
+
+    saveFaqs();
+};
+
+const removeFaq = (index) => {
+    form.items.splice(index, 1);
+    saveFaqs();
+};
+
+const editFaq = (index) => {
+    const item = form.items[index];
+    form.question = item.question;
+    form.answer = item.answer;
+    form.category = item.category;
+    form.status = item.status;
+    editingIndex.value = index;
+};
+
+const saveFaqs = () => {
+    submitting.value = true;
+    form.put('/admin/content/faq', {
+        preserveScroll: true,
+        onFinish: () => {
+            submitting.value = false;
+        },
+    });
+};
 </script>
 
 <template>
@@ -28,7 +88,7 @@ const form = useForm({
                         <h5 class="card-title mb-0">FAQ Form</h5>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form @submit.prevent="addFaq">
                             <div class="mb-3">
                                 <label class="form-label">Question</label>
                                 <input v-model="form.question" class="form-control" type="text" placeholder="How long does visa processing take?" />
@@ -41,7 +101,9 @@ const form = useForm({
                                 <label class="form-label">Category</label>
                                 <input v-model="form.category" class="form-control" type="text" placeholder="Visa" />
                             </div>
-                            <button type="button" class="btn btn-primary">Save FAQ</button>
+                            <button type="submit" class="btn btn-primary" :disabled="!form.question || !form.answer">
+                                {{ editingIndex === null ? 'Add FAQ' : 'Update FAQ' }}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -57,16 +119,26 @@ const form = useForm({
                                 <th>Question</th>
                                 <th>Category</th>
                                 <th>Status</th>
+                                <th class="text-end">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="faq in faqs" :key="faq.question">
+                            <tr v-for="(faq, index) in form.items" :key="`${faq.question}-${index}`">
                                 <td>{{ faq.question }}</td>
                                 <td>{{ faq.category }}</td>
                                 <td>{{ faq.status }}</td>
+                                <td class="text-end">
+                                    <button type="button" class="btn btn-sm btn-outline-primary me-2" @click="editFaq(index)">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" @click="removeFaq(index)">Delete</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="card-body border-top">
+                        <button type="button" class="btn btn-primary" :disabled="submitting" @click="saveFaqs">
+                            {{ submitting ? 'Saving...' : 'Save FAQ Content' }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -30,6 +30,7 @@ const badgeClass = (status) => {
 };
 
 const statusLabel = (status) => status.replaceAll('_', ' ');
+const canUpload = (item) => item.status !== 'approved';
 
 const uploadDocument = (requirementId, event) => {
     const file = event?.target?.files?.[0];
@@ -152,7 +153,7 @@ const uploadDocument = (requirementId, event) => {
                             </td>
                             <td>
                                 <template v-if="item.latest_submission">
-                                    <a :href="item.latest_submission.file_url" target="_blank" rel="noopener">
+                                    <a :href="item.latest_submission.file_url">
                                         {{ item.latest_submission.file_name }}
                                     </a>
                                     <div class="small text-muted">v{{ item.latest_submission.version }}</div>
@@ -160,16 +161,19 @@ const uploadDocument = (requirementId, event) => {
                                 <span v-else class="text-muted">No file</span>
                             </td>
                             <td>
-                                <label class="btn btn-sm btn-outline-primary mb-0">
-                                    {{ uploadState[item.requirement_id] ? 'Uploading...' : 'Upload / Re-upload' }}
-                                    <input
-                                        class="d-none"
-                                        type="file"
-                                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                                        :disabled="uploadState[item.requirement_id]"
-                                        @change="uploadDocument(item.requirement_id, $event)"
-                                    />
-                                </label>
+                                <template v-if="canUpload(item)">
+                                    <label class="btn btn-sm btn-outline-primary mb-0">
+                                        {{ uploadState[item.requirement_id] ? 'Uploading...' : 'Upload / Re-upload' }}
+                                        <input
+                                            class="d-none"
+                                            type="file"
+                                            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                                            :disabled="uploadState[item.requirement_id]"
+                                            @change="uploadDocument(item.requirement_id, $event)"
+                                        />
+                                    </label>
+                                </template>
+                                <span v-else class="badge bg-success">Approved - Locked</span>
                             </td>
                         </tr>
                     </tbody>

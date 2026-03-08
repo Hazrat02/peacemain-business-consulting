@@ -1,14 +1,45 @@
 <script setup>
 import { computed } from 'vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 
 const page = usePage();
 const logoutForm = useForm({});
 const currentUrl = computed(() => (page.url || '').split('?')[0]);
 const avatarSrc = computed(() => page.props.auth?.user?.profile_image_url || '/adminkit/img/avatars/avatar.jpg');
+const contactMessages = computed(() => page.props.adminHeader?.contactMessages || []);
+const contactMessageCount = computed(() => page.props.adminHeader?.unreadContactCount || 0);
+const recentDocs = computed(() => page.props.adminHeader?.recentDocs || []);
+const unreadRecentDocsCount = computed(() => page.props.adminHeader?.unreadRecentDocsCount || 0);
+const brandLogoUrl = computed(() => page.props.adminHeader?.brandLogoUrl || '');
 
 const isExact = (url) => currentUrl.value === url;
 const isPrefix = (url) => currentUrl.value.startsWith(url);
+const formatTime = (value) => {
+    if (!value) {
+        return '';
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return '';
+    }
+
+    return date.toLocaleString();
+};
+const previewText = (item) => {
+    const text = item?.subject || item?.message || item?.email || '';
+    return text.length > 70 ? `${text.slice(0, 70)}...` : text;
+};
+const docPreviewText = (item) => {
+    const text = item?.document_title || item?.file_name || 'Document';
+    return text.length > 60 ? `${text.slice(0, 60)}...` : text;
+};
+const markAsRead = (id) => {
+    router.patch(`/admin/contact-us/${id}/read`, {}, { preserveState: true, preserveScroll: true, only: ['adminHeader'] });
+};
+const markDocSeen = (id) => {
+    router.patch(`/admin/document-submissions/${id}/seen`, {}, { preserveState: true, preserveScroll: true, only: ['adminHeader'] });
+};
 
 const logout = () => {
     logoutForm.post('/logout');
@@ -20,7 +51,8 @@ const logout = () => {
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <Link class="sidebar-brand" href="/admin/dashboard">
-                    <span class="align-middle">AdminKit</span>
+                    <img v-if="brandLogoUrl" :src="brandLogoUrl" alt="Admin Logo" style="max-height: 44px; width: auto;" />
+                    <span v-else class="align-middle">AdminKit</span>
                 </Link>
 
                 <ul class="sidebar-nav">
@@ -32,7 +64,7 @@ const logout = () => {
                         </Link>
                     </li>
 
-                    <li class="sidebar-item" :class="{ active: isExact('/admin/users') }">
+                    <li class="sidebar-item" :class="{ active: isPrefix('/admin/users') }">
                         <Link class="sidebar-link" href="/admin/users">
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">User Manage</span>
                         </Link>
@@ -91,6 +123,11 @@ const logout = () => {
                             <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">User Reviews</span>
                         </Link>
                     </li>
+                    <li class="sidebar-item" :class="{ active: isExact('/admin/recent-docs') }">
+                        <Link class="sidebar-link" href="/admin/recent-docs">
+                            <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Recent docs</span>
+                        </Link>
+                    </li>
                 </ul>
 
                 <div class="sidebar-cta">
@@ -119,62 +156,40 @@ const logout = () => {
                             <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
                                 <div class="position-relative">
                                     <i class="align-middle" data-feather="bell"></i>
-                                    <span class="indicator">4</span>
+                                    <span v-if="unreadRecentDocsCount" class="indicator">{{ unreadRecentDocsCount }}</span>
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
-                                <div class="dropdown-menu-header">4 New Notifications</div>
+                                <div class="dropdown-menu-header">{{ recentDocs.length }} Recent Documents</div>
                                 <div class="list-group">
-                                    <a href="#" class="list-group-item">
+                                    <Link v-for="doc in recentDocs" :key="`doc-alert-${doc.id}`" href="/admin/recent-docs" class="list-group-item">
                                         <div class="row g-0 align-items-center">
                                             <div class="col-2">
-                                                <i class="text-danger" data-feather="alert-circle"></i>
+                                                <i class="text-primary" data-feather="file-text"></i>
                                             </div>
                                             <div class="col-10">
-                                                <div class="text-dark">Update completed</div>
-                                                <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                                <div class="text-muted small mt-1">30m ago</div>
+                                                <div class="text-dark" :class="{ 'fw-bold': !doc.is_seen }">{{ doc.user_name }}</div>
+                                                <div class="text-muted small mt-1">{{ docPreviewText(doc) }}</div>
+                                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                                    <div class="text-muted small">{{ doc.user_email }} | {{ formatTime(doc.created_at) }}</div>
+                                                    <button
+                                                        v-if="!doc.is_seen"
+                                                        type="button"
+                                                        class="btn btn-link btn-sm p-0 text-decoration-none"
+                                                        @click.prevent.stop="markDocSeen(doc.id)"
+                                                    >
+                                                        Mark seen
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-2">
-                                                <i class="text-warning" data-feather="bell"></i>
-                                            </div>
-                                            <div class="col-10">
-                                                <div class="text-dark">Lorem ipsum</div>
-                                                <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                                <div class="text-muted small mt-1">2h ago</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-2">
-                                                <i class="text-primary" data-feather="home"></i>
-                                            </div>
-                                            <div class="col-10">
-                                                <div class="text-dark">Login from 192.186.1.8</div>
-                                                <div class="text-muted small mt-1">5h ago</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-2">
-                                                <i class="text-success" data-feather="user-plus"></i>
-                                            </div>
-                                            <div class="col-10">
-                                                <div class="text-dark">New connection</div>
-                                                <div class="text-muted small mt-1">Christina accepted your request.</div>
-                                                <div class="text-muted small mt-1">14h ago</div>
-                                            </div>
-                                        </div>
-                                    </a>
+                                    </Link>
+                                    <div v-if="!recentDocs.length" class="list-group-item text-muted small">
+                                        No recent document submissions.
+                                    </div>
                                 </div>
                                 <div class="dropdown-menu-footer">
-                                    <a href="#" class="text-muted">Show all notifications</a>
+                                    <Link href="/admin/recent-docs" class="text-muted">Show all submissions</Link>
                                 </div>
                             </div>
                         </li>
@@ -182,64 +197,47 @@ const logout = () => {
                             <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
                                 <div class="position-relative">
                                     <i class="align-middle" data-feather="message-square"></i>
+                                    <span v-if="contactMessageCount" class="indicator">{{ contactMessageCount }}</span>
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
                                 <div class="dropdown-menu-header">
-                                    <div class="position-relative">4 New Messages</div>
+                                    <div class="position-relative">{{ contactMessages.length }} Latest Contact Messages</div>
                                 </div>
                                 <div class="list-group">
-                                    <a href="#" class="list-group-item">
+                                    <Link
+                                        v-for="item in contactMessages"
+                                        :key="`contact-${item.id}`"
+                                        :href="`/admin/contact-us/${item.id}/reply`"
+                                        class="list-group-item"
+                                    >
                                         <div class="row g-0 align-items-center">
                                             <div class="col-2">
-                                                <img :src="'/adminkit/img/avatars/avatar-5.jpg'" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker" />
+                                                <img :src="'/adminkit/img/avatars/avatar.jpg'" class="avatar img-fluid rounded-circle" :alt="item.name" />
                                             </div>
                                             <div class="col-10 ps-2">
-                                                <div class="text-dark">Vanessa Tucker</div>
-                                                <div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
-                                                <div class="text-muted small mt-1">15m ago</div>
+                                                <div class="text-dark" :class="{ 'fw-bold': !item.is_read }">{{ item.name }}</div>
+                                                <div class="text-muted small mt-1">{{ previewText(item) }}</div>
+                                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                                    <div class="text-muted small">{{ formatTime(item.created_at) }}</div>
+                                                    <button
+                                                        v-if="!item.is_read"
+                                                        type="button"
+                                                        class="btn btn-link btn-sm p-0 text-decoration-none"
+                                                        @click.prevent.stop="markAsRead(item.id)"
+                                                    >
+                                                        Mark read
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-2">
-                                                <img :src="'/adminkit/img/avatars/avatar-2.jpg'" class="avatar img-fluid rounded-circle" alt="William Harris" />
-                                            </div>
-                                            <div class="col-10 ps-2">
-                                                <div class="text-dark">William Harris</div>
-                                                <div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
-                                                <div class="text-muted small mt-1">2h ago</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-2">
-                                                <img :src="'/adminkit/img/avatars/avatar-4.jpg'" class="avatar img-fluid rounded-circle" alt="Christina Mason" />
-                                            </div>
-                                            <div class="col-10 ps-2">
-                                                <div class="text-dark">Christina Mason</div>
-                                                <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
-                                                <div class="text-muted small mt-1">4h ago</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <div class="row g-0 align-items-center">
-                                            <div class="col-2">
-                                                <img :src="'/adminkit/img/avatars/avatar-3.jpg'" class="avatar img-fluid rounded-circle" alt="Sharon Lessman" />
-                                            </div>
-                                            <div class="col-10 ps-2">
-                                                <div class="text-dark">Sharon Lessman</div>
-                                                <div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
-                                                <div class="text-muted small mt-1">5h ago</div>
-                                            </div>
-                                        </div>
-                                    </a>
+                                    </Link>
+                                    <div v-if="!contactMessages.length" class="list-group-item text-muted small">
+                                        No contact messages yet.
+                                    </div>
                                 </div>
                                 <div class="dropdown-menu-footer">
-                                    <a href="#" class="text-muted">Show all messages</a>
+                                    <Link href="/admin/contact-us" class="text-muted">Show all messages</Link>
                                 </div>
                             </div>
                         </li>
@@ -253,11 +251,9 @@ const logout = () => {
                                 <span class="text-dark">{{ page.props.auth?.user?.full_name || page.props.auth?.user?.email }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="/admin/profile"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
+                                <Link class="dropdown-item" href="/admin/profile"><i class="align-middle me-1" data-feather="user"></i> Profile</Link>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+                                <Link class="dropdown-item" href="/admin/settings"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</Link>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" @click.prevent="logout">Log out</a>
                             </div>

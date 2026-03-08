@@ -1,9 +1,13 @@
 <script setup>
-import { Head, router, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import AdminLayout from '../../Layouts/AdminLayout.vue';
 
 const props = defineProps({
     users: {
+        type: Array,
+        required: true,
+    },
+    countries: {
         type: Array,
         required: true,
     },
@@ -36,7 +40,10 @@ const applyFilters = () => {
             <div class="card-body">
                 <form class="row g-2" @submit.prevent="applyFilters">
                     <div class="col-md-4">
-                        <input v-model="filterForm.country" class="form-control" type="text" placeholder="Filter by country" />
+                        <select v-model="filterForm.country" class="form-select">
+                            <option value="">Filter by country</option>
+                            <option v-for="country in countries" :key="country" :value="country">{{ country }}</option>
+                        </select>
                     </div>
                     <div class="col-md-3">
                         <select v-model="filterForm.status" class="form-select">
@@ -88,7 +95,7 @@ const applyFilters = () => {
                             <td>{{ user.progress.pending }}</td>
                             <td>{{ user.progress.rejected }}</td>
                             <td class="text-end">
-                                <a class="btn btn-sm btn-outline-primary" :href="`/admin/document-checklists/${user.id}`">Review</a>
+                                <Link class="btn btn-sm btn-outline-primary" :href="`/admin/document-checklists/${user.id}`">Review</Link>
                             </td>
                         </tr>
                     </tbody>
@@ -97,4 +104,3 @@ const applyFilters = () => {
         </div>
     </AdminLayout>
 </template>
-

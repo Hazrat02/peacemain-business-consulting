@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\TokenAuthController;
 use App\Http\Controllers\User\UserDocumentController;
 use App\Http\Controllers\User\UserDashboardController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +20,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Public/Home');
+    return redirect()->route('user.dashboard');
 })->name('home');
 
 Route::middleware('guest')->group(function () {
@@ -42,7 +41,7 @@ Route::middleware('auth')->post('/admin/logout', [TokenAuthController::class, 'w
 Route::middleware('auth')->get('/dashboard', UserDashboardController::class)->name('user.dashboard');
 Route::middleware('auth')->get('/dashboard/documents', [UserDashboardController::class, 'documents'])->name('user.documents');
 Route::middleware('auth')->post('/dashboard/documents/{requirement}/submissions', [UserDocumentController::class, 'store'])->name('user.documents.submissions.store');
-Route::middleware('auth')->get('/dashboard/overseas', [UserDashboardController::class, 'overseas'])->name('user.overseas');
+Route::middleware('auth')->get('/documents/submissions/{submission}/download', [UserDocumentController::class, 'download'])->name('documents.submissions.download');
 Route::middleware('auth')->get('/profile', [ProfileController::class, 'userEdit'])->name('user.profile.edit');
 Route::middleware('auth')->patch('/profile', [ProfileController::class, 'userUpdate'])->name('user.profile.update');
 Route::middleware('auth')->patch('/profile/password', [ProfileController::class, 'userUpdatePassword'])->name('user.profile.password.update');
@@ -53,13 +52,25 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'adminUpdate'])->name('admin.profile.update');
     Route::patch('/profile/password', [ProfileController::class, 'adminUpdatePassword'])->name('admin.profile.password.update');
     Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
+    Route::get('/users/{user}', [AdminDashboardController::class, 'userView'])->name('admin.users.view');
+    Route::post('/users/{user}/login-as', [AdminDashboardController::class, 'loginAsUser'])->name('admin.users.login-as');
+    Route::patch('/users/{user}/ban', [AdminDashboardController::class, 'toggleBanUser'])->name('admin.users.ban');
     Route::get('/contact-us', [AdminDashboardController::class, 'contactUs'])->name('admin.contact-us');
+    Route::patch('/contact-us/{contact}', [AdminDashboardController::class, 'updateContactStatus'])->name('admin.contact-us.status');
+    Route::patch('/contact-us/{contact}/read', [AdminDashboardController::class, 'markContactRead'])->name('admin.contact-us.read');
+    Route::get('/contact-us/{contact}/reply', [AdminDashboardController::class, 'contactReply'])->name('admin.contact-us.reply');
+    Route::post('/contact-us/{contact}/reply', [AdminDashboardController::class, 'sendContactReply'])->name('admin.contact-us.reply.send');
     Route::get('/roles', [AdminDashboardController::class, 'roles'])->name('admin.roles');
     Route::get('/content/banner', [AdminDashboardController::class, 'contentBanner'])->name('admin.content.banner');
     Route::get('/content/sidebar', [AdminDashboardController::class, 'contentSidebar'])->name('admin.content.sidebar');
     Route::get('/content/faq', [AdminDashboardController::class, 'contentFaq'])->name('admin.content.faq');
     Route::get('/content/contact-info', [AdminDashboardController::class, 'contentContactInfo'])->name('admin.content.contact-info');
+    Route::put('/content/banner', [AdminDashboardController::class, 'updateContentBanner'])->name('admin.content.banner.update');
+    Route::put('/content/sidebar', [AdminDashboardController::class, 'updateContentSidebar'])->name('admin.content.sidebar.update');
+    Route::put('/content/faq', [AdminDashboardController::class, 'updateContentFaq'])->name('admin.content.faq.update');
+    Route::put('/content/contact-info', [AdminDashboardController::class, 'updateContentContactInfo'])->name('admin.content.contact-info.update');
     Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('admin.settings');
+    Route::put('/settings', [AdminDashboardController::class, 'updateSettings'])->name('admin.settings.update');
 
     Route::get('/documents', [AdminDocumentController::class, 'index'])->name('admin.documents');
     Route::get('/documents/sections/{section}/rules', [AdminDocumentController::class, 'sectionRules'])->name('admin.documents.sections.rules');
@@ -75,4 +86,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/document-checklists', [AdminDocumentController::class, 'userChecklists'])->name('admin.documents.user-checklists');
     Route::get('/document-checklists/{user}', [AdminDocumentController::class, 'showUserChecklist'])->name('admin.documents.user-checklists.show');
     Route::post('/document-checklists/{requirement}/review', [AdminDocumentController::class, 'reviewSubmission'])->name('admin.documents.user-checklists.review');
+    Route::get('/recent-docs', [AdminDocumentController::class, 'recentDocs'])->name('admin.documents.recent');
+    Route::patch('/document-submissions/{submission}/seen', [AdminDocumentController::class, 'markSubmissionSeen'])->name('admin.documents.submissions.seen');
 });

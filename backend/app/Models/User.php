@@ -30,6 +30,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'is_banned',
+        'banned_at',
     ];
 
     protected $appends = [
@@ -55,6 +57,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'is_admin' => 'boolean',
+        'is_banned' => 'boolean',
+        'banned_at' => 'datetime',
     ];
 
     public function requiredDocuments(): HasMany
