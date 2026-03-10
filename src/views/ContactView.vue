@@ -1,6 +1,7 @@
 <script>
 import HomeLayout from "./../Layouts/HomeLayout.vue";
 import bannerImage from "@/assets/frontend/img/inner-pages/braadcrumb-bg5.jpg";
+import axios from "axios";
 
 export default {
   components: {
@@ -8,8 +9,93 @@ export default {
   },
   data() {
     return {
-      bannerImage
+      bannerImage,
+      contactForm: {
+        name: "",
+        email: "",
+        company: "",
+        area: "",
+        message: "",
+      },
+      isSubmitting: false,
+      contactInfo: {
+        phone: "+91-8123781857",
+        email: "info@peacemain.com",
+        address: "PEACEMAIN Ltd.,Celestia Kyriakou Matsi 5, Limassol 4529, Cyprus",
+        map_url: "https://maps.app.goo.gl/sDLkkAWRX1Ho9hUD9",
+        map_embed_url:
+          "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10584.26445645795!2d77.58083569448927!3d12.906775654837578!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1513448609bf%3A0x22d8538479cabefa!2s250%2C%2024th%20Main%20Rd%2C%20KR%20Layout%2C%20JP%20Nagar%20Phase%206%2C%20J.%20P.%20Nagar%2C%20Bengaluru%2C%20Karnataka%20560078%2C%20India!5e0!3m2!1sen!2sbd!4v1731841896879!5m2!1sen!2sbd",
+        locations: [
+          {
+            name: "Limassol, Cyprus",
+            map_url: "https://maps.app.goo.gl/sDLkkAWRX1Ho9hUD9",
+            phone: "+91-8123781857",
+            email: "info@peacemain.com",
+            address: "PEACEMAIN Ltd.,Celestia Kyriakou Matsi 5, Limassol 4529, Cyprus",
+          },
+          {
+            name: "Bangalore, India",
+            map_url: "https://maps.app.goo.gl/nPuSUvb5bbtuYK8W6",
+            phone: "+91-8123781857",
+            email: "info@peacemain.com",
+            address:
+              "PEACEMAIN Consulting Pvt. Ltd., 249, 24th Main Rd, KR Layout, JP Nagar Phase 6, J. P. Nagar, Bengaluru, Karnataka 560078, India",
+          },
+        ],
+      },
     };
+  },
+  computed: {
+    locationOne() {
+      return this.contactInfo.locations?.[0] || {};
+    },
+    locationTwo() {
+      return this.contactInfo.locations?.[1] || {};
+    },
+  },
+  created() {
+    axios
+      .get("/api/content/contact-info")
+      .then((response) => {
+        const row = response?.data?.data || null;
+        if (row) {
+          this.contactInfo = row;
+        }
+      })
+      .catch(() => {});
+  },
+  methods: {
+    async submitContact() {
+      if (this.isSubmitting) return;
+
+      this.isSubmitting = true;
+      try {
+        await axios.post("/api/contact.store", {
+          name: this.contactForm.name,
+          email: this.contactForm.email,
+          sub: this.contactForm.area || this.contactForm.company || "General Inquiry",
+          sms: `Company Name: ${this.contactForm.company}\n\n${this.contactForm.message}`,
+        });
+
+        if (this.$toast?.success) {
+          this.$toast.success("Message sent successfully.");
+        }
+
+        this.contactForm = {
+          name: "",
+          email: "",
+          company: "",
+          area: "",
+          message: "",
+        };
+      } catch (error) {
+        if (this.$toast?.error) {
+          this.$toast.error("Unable to submit message. Please try again.");
+        }
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
   },
 };
 </script>
@@ -48,8 +134,8 @@ export default {
             <div class="col-lg-5">
               <div class="single-location mb-50">
                 <div class="title-and-view-btn">
-                  <h4>Limassol, Cyprus</h4>
-                  <a href="https://maps.app.goo.gl/sDLkkAWRX1Ho9hUD9"
+                  <h4>{{ locationOne.name || "Limassol, Cyprus" }}</h4>
+                  <a :href="locationOne.map_url || contactInfo.map_url"
                     >View Map
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +164,7 @@ export default {
                       </svg>
                     </div>
                     <div class="info">
-                      <a href="tel:+91-8123781857">+91-8123781857</a>
+                      <a :href="`tel:${locationOne.phone || contactInfo.phone}`">{{ locationOne.phone || contactInfo.phone }}</a>
                     </div>
                   </li>
                   <li>
@@ -97,11 +183,11 @@ export default {
                     <div class="info">
                       
                       <a
-                        href="mailto:info@peacemain.com"
+                        :href="`mailto:${locationOne.email || contactInfo.email}`"
                         ><span
                           class="__cf_email__"
                           
-                          >info@peacemain.com</span
+                          >{{ locationOne.email || contactInfo.email }}</span
                         ></a
                       >
                     </div>
@@ -124,7 +210,7 @@ export default {
                     </div>
                     <div class="info">
                       <a
-                        >PEACEMAIN Ltd.,Celestia Kyriakou Matsi 5, Limassol 4529, Cyprus
+                        >{{ locationOne.address || contactInfo.address }}
                         </a
                       >
                     </div>
@@ -133,8 +219,8 @@ export default {
               </div>
               <div class="single-location">
                 <div class="title-and-view-btn">
-                  <h4>Bangalore, India</h4>
-                  <a href="https://maps.app.goo.gl/nPuSUvb5bbtuYK8W6"
+                  <h4>{{ locationTwo.name || "Bangalore, India" }}</h4>
+                  <a :href="locationTwo.map_url || contactInfo.map_url"
                     >View Map
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +249,7 @@ export default {
                       </svg>
                     </div>
                     <div class="info">
-                      <a href="tel:+91-8123781857">+91-8123781857</a>
+                      <a :href="`tel:${locationTwo.phone || contactInfo.phone}`">{{ locationTwo.phone || contactInfo.phone }}</a>
                     </div>
                   </li>
                   <li>
@@ -182,11 +268,11 @@ export default {
                     <div class="info">
                       
                       <a
-                        href="mailto:info@peacemain.com"
+                        :href="`mailto:${locationTwo.email || contactInfo.email}`"
                         ><span
                           class="__cf_email__"
                           
-                          >info@peacemain.com</span
+                          >{{ locationTwo.email || contactInfo.email }}</span
                         ></a
                       >
                     </div>
@@ -209,8 +295,7 @@ export default {
                     </div>
                     <div class="info">
                       <a
-                        >PEACEMAIN Consulting Pvt. Ltd., 249, 24th Main Rd, KR Layout, JP Nagar Phase 6, J. P. Nagar, Bengaluru,
-Karnataka 560078, India
+                        >{{ locationTwo.address || contactInfo.address }}
 
                         </a
                       >
@@ -223,7 +308,7 @@ Karnataka 560078, India
               <div class="company-map">
                 <iframe
             
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10584.26445645795!2d77.58083569448927!3d12.906775654837578!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1513448609bf%3A0x22d8538479cabefa!2s250%2C%2024th%20Main%20Rd%2C%20KR%20Layout%2C%20JP%20Nagar%20Phase%206%2C%20J.%20P.%20Nagar%2C%20Bengaluru%2C%20Karnataka%20560078%2C%20India!5e0!3m2!1sen!2sbd!4v1731841896879!5m2!1sen!2sbd"
+                  :src="contactInfo.map_embed_url"
                   allowfullscreen
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -248,39 +333,41 @@ Karnataka 560078, India
             </div>
             <div class="col-lg-7">
               <div class="contact-form-area two">
-                <form>
+                <form @submit.prevent="submitContact">
                   <div class="row">
                     <div class="col-lg-6 mb-30">
                       <div class="form-inner">
                         <label>Name*</label>
-                        <input type="text" placeholder="Daniel Scoot" />
+                        <input v-model="contactForm.name" type="text" placeholder="Daniel Scoot" required />
                       </div>
                     </div>
                     <div class="col-lg-6 mb-30">
                       <div class="form-inner">
                         <label>Work Email*</label>
                         <input
+                          v-model="contactForm.email"
                           type="email"
                           placeholder="infoexample@gmail.com"
+                          required
                         />
                       </div>
                     </div>
                     <div class="col-lg-6 mb-30">
                       <div class="form-inner">
                         <label>Company Name*</label>
-                        <input type="text" placeholder="Consult Pro" />
+                        <input v-model="contactForm.company" type="text" placeholder="Consult Pro" required />
                       </div>
                     </div>
                     <div class="col-lg-6 mb-30">
                       <div class="form-inner">
                         <label>Consulting Area*</label>
-                        <input type="text" placeholder="Dealership" />
+                        <input v-model="contactForm.area" type="text" placeholder="Dealership" required />
                       </div>
                     </div>
                     <div class="col-lg-12 mb-15">
                       <div class="form-inner">
                         <label>Write Your Massage*</label>
-                        <textarea placeholder="What’s on your mind"></textarea>
+                        <textarea v-model="contactForm.message" placeholder="What’s on your mind" required></textarea>
                       </div>
                     </div>
                     <div class="col-lg-12 mb-50">
@@ -299,8 +386,8 @@ Karnataka 560078, India
                     </div>
                     <div class="col-lg-12">
                       <div class="form-inner">
-                        <button class="primary-btn1 btn-hover" type="submit">
-                          Submit Now
+                        <button class="primary-btn1 btn-hover" type="submit" :disabled="isSubmitting">
+                          {{ isSubmitting ? "Submitting..." : "Submit Now" }}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"

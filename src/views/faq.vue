@@ -33,159 +33,18 @@
           <div class="col-lg-8">
             <div class="faq-wrap">
               <div class="accordion">
-                <div class="accordion-item">
-                  <h2
-                    class="accordion-header"
-                  >
-                    <button class="accordion-button  d-flex justify-content-between align-content-center" @click="faq(1)">
-                      <span> What is health and care consulting? </span>
-                      <span class="">
-                        <i class="fa" :class="{
-                      'fa-minus': faqId == 1,'fa-plus': faqId != 1
-                    }"></i>
+                <div class="accordion-item" v-for="(item, idx) in faqs" :key="`faq-${idx}`">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button d-flex justify-content-between align-content-center" @click="faq(idx + 1)">
+                      <span> {{ item.question }} </span>
+                      <span>
+                        <i class="fa" :class="{ 'fa-minus': faqId == (idx + 1), 'fa-plus': faqId != (idx + 1) }"></i>
                       </span>
                     </button>
                   </h2>
-                  <div
-                    class="accordion-collapse collapse"
-                    :class="{
-                      show: faqId == 1,
-                    }"
-                  >
+                  <div class="accordion-collapse collapse" :class="{ show: faqId == (idx + 1) }">
                     <div class="accordion-body">
-                      Health and care consulting is a specialized service that
-                      provides advisory and support to healthcare organizations
-                      and stakeholders to improve operations, patient care.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button  d-flex justify-content-between align-content-center" 
-                    @click="faq(2)">
-                      <span> What is health and care consulting? </span>
-                      <span class="">
-                        <i class="fa" :class="{
-                      'fa-minus': faqId == 2,'fa-plus': faqId != 2
-                    }"></i>
-                      </span>
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseTwo"
-                    class="accordion-collapse collapse"
-                    :class="{
-                      show: faqId == 2,
-                    }"
-                  >
-                    <div class="accordion-body">
-                      Health and care consulting is a specialized service that
-                      provides advisory and support to healthcare organizations
-                      and stakeholders to improve operations, patient care.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button  d-flex justify-content-between align-content-center" 
-                    @click="faq(3)">
-                      <span> What is health and care consulting? </span>
-                      <span class="">
-                        <i class="fa" :class="{
-                      'fa-minus': faqId == 3,'fa-plus': faqId != 3
-                    }"></i>
-                      </span>
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseThree"
-                    class="accordion-collapse collapse"
-                    :class="{
-                      show: faqId == 3,
-                    }"
-                  >
-                    <div class="accordion-body">
-                      Health and care consulting is a specialized service that
-                      provides advisory and support to healthcare organizations
-                      and stakeholders to improve operations, patient care.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button  d-flex justify-content-between align-content-center" 
-                    @click="faq(4)">
-                      <span> What is health and care consulting? </span>
-                      <span class="">
-                        <i class="fa" :class="{
-                      'fa-minus': faqId == 4,'fa-plus': faqId != 4
-                    }"></i>
-                      </span>
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseFour"
-                    class="accordion-collapse collapse"
-                    :class="{
-                      show: faqId == 4,
-                    }"
-                  >
-                    <div class="accordion-body">
-                      Health and care consulting is a specialized service that
-                      provides advisory and support to healthcare organizations
-                      and stakeholders to improve operations, patient care.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingFive">
-                    <button class="accordion-button  d-flex justify-content-between align-content-center" 
-                    @click="faq(5)">
-                      <span> What is health and care consulting? </span>
-                      <span class="">
-                        <i class="fa" :class="{
-                      'fa-minus': faqId == 5,'fa-plus': faqId != 5
-                    }"></i>
-                      </span>
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseFive"
-                    class="accordion-collapse collapse"
-                    :class="{
-                      show: faqId == 5,
-                    }"
-                  >
-                    <div class="accordion-body">
-                      Health and care consulting is a specialized service that
-                      provides advisory and support to healthcare organizations
-                      and stakeholders to improve operations, patient care.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingSix">
-                    <button class="accordion-button  d-flex justify-content-between align-content-center" 
-                    @click="faq(6)">
-                      <span> What is health and care consulting? </span>
-                      <span class="">
-                        <i class="fa" :class="{
-                      'fa-minus': faqId == 6,'fa-plus': faqId != 6
-                    }"></i>
-                      </span>
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseSix"
-                    class="accordion-collapse collapse"
-                    :class="{
-                      show: faqId == 6,
-                    }"
-                  >
-                    <div class="accordion-body">
-                      Health and care consulting is a specialized service that
-                      provides advisory and support to healthcare organizations
-                      and stakeholders to improve operations, patient care.
+                      {{ item.answer }}
                     </div>
                   </div>
                 </div>
@@ -255,6 +114,7 @@
 <script>
 import HomeLayout from "./../Layouts/HomeLayout.vue";
 import bannerImage from "@/assets/frontend/img/inner-pages/braadcrumb-bg5.jpg";
+import axios from "axios";
 
 export default {
   components: {
@@ -264,7 +124,50 @@ export default {
     return {
       faqId: 1,
       bannerImage,
+      faqs: [
+        {
+          question: "What is health and care consulting?",
+          answer:
+            "Health and care consulting is a specialized service that provides advisory and support to healthcare organizations and stakeholders to improve operations, patient care.",
+        },
+        {
+          question: "What is health and care consulting?",
+          answer:
+            "Health and care consulting is a specialized service that provides advisory and support to healthcare organizations and stakeholders to improve operations, patient care.",
+        },
+        {
+          question: "What is health and care consulting?",
+          answer:
+            "Health and care consulting is a specialized service that provides advisory and support to healthcare organizations and stakeholders to improve operations, patient care.",
+        },
+        {
+          question: "What is health and care consulting?",
+          answer:
+            "Health and care consulting is a specialized service that provides advisory and support to healthcare organizations and stakeholders to improve operations, patient care.",
+        },
+        {
+          question: "What is health and care consulting?",
+          answer:
+            "Health and care consulting is a specialized service that provides advisory and support to healthcare organizations and stakeholders to improve operations, patient care.",
+        },
+        {
+          question: "What is health and care consulting?",
+          answer:
+            "Health and care consulting is a specialized service that provides advisory and support to healthcare organizations and stakeholders to improve operations, patient care.",
+        },
+      ],
     };
+  },
+  created() {
+    axios
+      .get("/api/content/faq")
+      .then((response) => {
+        const rows = response?.data?.data || [];
+        if (Array.isArray(rows) && rows.length) {
+          this.faqs = rows;
+        }
+      })
+      .catch(() => {});
   },
   methods: {
     faq(id) {

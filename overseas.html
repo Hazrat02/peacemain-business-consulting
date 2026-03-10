@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Comprehensive Document Checklist for Overseas Employment</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1b33;
+      --card2:#0c1730;
+      --text:#eaf0ff;
+      --muted:#a9b7da;
+      --line:rgba(255,255,255,.10);
+      --brand:#ffcc55;
+      --brand2:#6ee7ff;
+      --ok:#4ade80;
+      --warn:#fbbf24;
+      --danger:#fb7185;
+
+      --radius:18px;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(110,231,255,.18), transparent 50%),
+        radial-gradient(1200px 700px at 80% 0%, rgba(255,204,85,.14), transparent 55%),
+        radial-gradient(900px 500px at 70% 70%, rgba(99,102,241,.18), transparent 60%),
+        linear-gradient(180deg, #070b15 0%, #070b15 15%, var(--bg) 100%);
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:26px 16px 60px;
+    }
+
+    .hero{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)),
+        radial-gradient(900px 300px at 20% 0%, rgba(110,231,255,.20), transparent 55%),
+        radial-gradient(900px 300px at 80% 0%, rgba(255,204,85,.18), transparent 60%);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        linear-gradient(90deg, rgba(110,231,255,.25), rgba(255,204,85,.20), rgba(99,102,241,.22));
+      filter: blur(22px);
+      opacity:.25;
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      padding:24px;
+    }
+
+    @media (max-width: 900px){
+      .hero-inner{ grid-template-columns: 1fr; }
+    }
+
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(15,27,51,.55);
+      backdrop-filter: blur(10px);
+      width:fit-content;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .dot{
+      width:9px; height:9px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--brand) 55%, rgba(255,204,85,.2));
+      box-shadow: 0 0 0 6px rgba(255,204,85,.12);
+    }
+
+    h1{
+      margin:14px 0 6px;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height:1.12;
+      letter-spacing: -.02em;
+    }
+
+    .sub{
+      margin:0;
+      color: var(--muted);
+      line-height:1.55;
+      font-size: 15.5px;
+      max-width: 70ch;
+    }
+
+    .badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(12,23,48,.55);
+      box-shadow: var(--shadow2);
+      color: var(--text);
+      font-size: 13px;
+      white-space:nowrap;
+    }
+    .badge b{ font-weight:700; }
+    .badge .mini{
+      width:10px; height:10px; border-radius: 3px;
+      background: rgba(110,231,255,.9);
+      box-shadow: 0 0 0 6px rgba(110,231,255,.10);
+    }
+    .badge .mini.gold{ background: rgba(255,204,85,.95); box-shadow: 0 0 0 6px rgba(255,204,85,.10); }
+    .badge .mini.pink{ background: rgba(251,113,133,.95); box-shadow: 0 0 0 6px rgba(251,113,133,.10); }
+
+    .hero-card{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      padding:16px;
+      box-shadow: var(--shadow2);
+      min-height: 220px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-img{
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(135deg, rgba(110,231,255,.18), rgba(255,204,85,.12)),
+        url("https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1200&q=70");
+      background-size: cover;
+      background-position: center;
+      height: 210px;
+      position:relative;
+    }
+
+    .img-overlay{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(7,11,21,.10), rgba(7,11,21,.72));
+    }
+
+    .img-text{
+      position:absolute;
+      left:14px; right:14px; bottom:12px;
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .img-text .title{
+      font-weight:800;
+      letter-spacing:-.01em;
+      font-size:16px;
+    }
+    .img-text .meta{
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .toc{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(15,27,51,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+      padding:16px;
+    }
+
+    .toc-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .toc-head h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:-.01em;
+    }
+    .pill{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color: var(--muted);
+      font-size:12px;
+      background: rgba(12,23,48,.35);
+    }
+
+    .toc-list{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px;
+    }
+    @media (max-width: 760px){
+      .toc-list{ grid-template-columns: 1fr; }
+    }
+
+    .toc a{
+      text-decoration:none;
+      color: var(--text);
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding:10px 12px;
+      background: rgba(12,23,48,.40);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .toc a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(110,231,255,.28);
+      background: rgba(12,23,48,.55);
+    }
+    .toc a span{
+      color: var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .section{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(15,27,51,.45);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+
+    .section-header{
+      padding:16px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01));
+    }
+
+    .section-header h3{
+      margin:0;
+      font-size:16px;
+      letter-spacing:-.01em;
+    }
+    .section-header p{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-size:13.5px;
+      line-height:1.45;
+    }
+
+    .section-body{
+      padding:14px 16px 16px;
+    }
+
+    details{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(12,23,48,.35);
+      margin:10px 0;
+      overflow:hidden;
+    }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+
+    .sum-left{
+      display:flex; align-items:center; gap:10px;
+      min-width:0;
+    }
+    .icon{
+      width:28px; height:28px; border-radius: 10px;
+      display:grid; place-items:center;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      flex: 0 0 auto;
+    }
+    .sum-title{
+      font-weight:700;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .chev{
+      width:30px; height:30px;
+      border-radius: 10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      display:grid; place-items:center;
+      flex: 0 0 auto;
+      transition: transform .2s ease;
+    }
+    details[open] .chev{ transform: rotate(180deg); }
+
+    .content{
+      padding: 0 12px 12px;
+      color: var(--muted);
+      line-height:1.55;
+      font-size: 13.5px;
+    }
+    .content ul{
+      margin:10px 0 0 18px;
+      padding:0;
+    }
+    .content li{ margin:6px 0; }
+
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-top:10px;
+    }
+    .chip{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(7,11,21,.28);
+      color: var(--text);
+      font-size:12px;
+    }
+
+    .callouts{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 900px){
+      .callouts{ grid-template-columns: 1fr; }
+    }
+    .callout{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      padding:12px;
+      background: rgba(12,23,48,.40);
+      position:relative;
+      overflow:hidden;
+    }
+    .callout strong{ display:block; margin-bottom:6px; }
+    .callout p{ margin:0; color: var(--muted); font-size:13px; line-height:1.45; }
+    .callout.ok{ border-color: rgba(74,222,128,.22); }
+    .callout.warn{ border-color: rgba(251,191,36,.22); }
+    .callout.danger{ border-color: rgba(251,113,133,.22); }
+
+    .table-wrap{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      overflow:auto;
+      background: rgba(12,23,48,.35);
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+    th,td{
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:13.5px;
+    }
+    th{
+      position:sticky; top:0;
+      background: rgba(15,27,51,.92);
+      backdrop-filter: blur(8px);
+      color: var(--text);
+      font-weight:700;
+      letter-spacing:.01em;
+    }
+    td{ color: var(--muted); }
+    tr:hover td{ background: rgba(255,255,255,.03); color: var(--text); }
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 900px){
+      .two-col{ grid-template-columns: 1fr; }
+    }
+
+    .note{
+      border:1px dashed rgba(110,231,255,.35);
+      border-radius: 16px;
+      padding:12px;
+      background: rgba(110,231,255,.08);
+      color: var(--text);
+    }
+    .note p{ margin:0; color: var(--muted); }
+    .note b{ color: var(--text); }
+
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 14px 0;
+    }
+
+    .mini-list{
+      margin:10px 0 0 18px;
+      color: var(--muted);
+      line-height:1.55;
+    }
+
+    /* Print-friendly */
+    @media print{
+      body{ background:#fff; color:#111; }
+      .hero,.toc,.section,.callout,.table-wrap,details{ box-shadow:none !important; backdrop-filter:none !important; }
+      .hero,.toc,.section{ background:#fff !important; border-color:#ddd !important; }
+      a{ color:#111; }
+      .badge,.pill,.chip{ border-color:#ddd !important; }
+      .hero::before{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Page intro">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker"><span class="dot"></span> Overseas Employment Checklist • Blue-Collar & Technical Jobs</div>
+
+          <h1>Comprehensive Document Checklist for Overseas Employment</h1>
+          <p class="sub">
+            This checklist covers essential documents required by candidates applying for overseas blue-collar or technical hands-on
+            positions across the Middle East (UAE, Saudi Arabia, Qatar, Oman, Kuwait, Bahrain), South Asia, and Europe.
+          </p>
+
+          <div class="badges">
+            <div class="badge"><span class="mini"></span> Target roles: <b>Skilled/Semi-skilled</b></div>
+            <div class="badge"><span class="mini gold"></span> Regions: <b>Middle East • South Asia • Europe</b></div>
+            <div class="badge"><span class="mini pink"></span> Last Updated: <b>March 2, 2026</b></div>
+          </div>
+
+          <div class="callouts">
+            <div class="callout ok">
+              <strong>✅ Start Early</strong>
+              <p>Begin document collection <b>3–4 months</b> before travel. Total prep is often <b>8–16 weeks</b>.</p>
+            </div>
+            <div class="callout warn">
+              <strong>🟨 Copies + Backup</strong>
+              <p>Keep <b>4–6 photocopies</b> of all docs and scan everything to cloud storage.</p>
+            </div>
+            <div class="callout danger">
+              <strong>🟥 Fraud Warning</strong>
+              <p>Deal only with <b>licensed recruitment agencies</b> and verify offers before payments.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Visual card">
+          <div class="hero-img" role="img" aria-label="Workers and overseas employment concept image">
+            <div class="img-overlay"></div>
+            <div class="img-text">
+              <div class="title">Checklist Version 1.0</div>
+              <div class="meta">Prepared for: overseas recruitment candidates<br/>Coverage: Middle East, South Asia & Europe</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TOC -->
+    <section class="grid">
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-head">
+          <h2>Jump to Section</h2>
+          <div class="pill">18 sections • printable</div>
+        </div>
+
+        <div class="toc-list">
+          <a href="#s1">1) Personal Identity <span>passport, NID, photos</span></a>
+          <a href="#s2">2) Education <span>certs, attestation</span></a>
+          <a href="#s3">3) Employment <span>CV, experience</span></a>
+          <a href="#s4">4) Legal & PCC <span>police clearance</span></a>
+          <a href="#s5">5) Medical & Health <span>tests, insurance</span></a>
+          <a href="#s6">6) Offer & Contract <span>job offer, demand</span></a>
+          <a href="#s7">7) Visa & Immigration <span>forms, sponsor</span></a>
+          <a href="#s8">8) Financial <span>bank, funds</span></a>
+          <a href="#s9">9) Emigration (India) <span>eMigrate, ECR</span></a>
+          <a href="#s10">10) Travel <span>tickets, transit</span></a>
+          <a href="#s11">11) Family (If any) <span>marriage, kids</span></a>
+          <a href="#s12">12) Employer Docs <span>reference</span></a>
+          <a href="#s13">13) Region Extras <span>ME/Europe/SEA</span></a>
+          <a href="#s14">14) Timeline Table <span>estimated time</span></a>
+          <a href="#s15">15) Best Practices <span>reminders</span></a>
+          <a href="#s16">16) Common Mistakes <span>avoid</span></a>
+          <a href="#s17">17) Final Verification <span>48h checklist</span></a>
+          <a href="#s18">18) Resources + Disclaimer <span>official portals</span></a>
+        </div>
+      </nav>
+
+      <!-- SECTION 1 -->
+      <section id="s1" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 1: Personal Identity Documents</h3>
+            <p>Core identity documents required in almost all destinations.</p>
+          </div>
+          <div class="pill">High Priority</div>
+        </header>
+
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🛂</div>
+                <div class="sum-title">Valid Passport</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Minimum <b>6 months</b> validity from intended travel date (preferably <b>2 years</b> remaining)</li>
+                <li>At least <b>two blank visa pages</b></li>
+                <li><b>Original</b> required; pages must be clear and undamaged</li>
+                <li>Photocopies: <b>4–6 copies</b> of passport data page</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">Original required</span>
+                <span class="chip">4–6 copies</span>
+                <span class="chip">2 blank pages</span>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🪪</div>
+                <div class="sum-title">National Identity Card</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Government-issued photo ID</li>
+                <li>Valid and current</li>
+                <li>Photocopy required (both sides)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">👶</div>
+                <div class="sum-title">Birth Certificate</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Original or certified copy</li>
+                <li>Official translation if not in English/Arabic</li>
+                <li>May require attestation for some countries</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">📸</div>
+                <div class="sum-title">Passport-Size Photographs</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li><b>8–12</b> recent color photos</li>
+                <li>White or light blue background</li>
+                <li>Biometric specs (usually <b>35mm × 45mm</b> or per destination)</li>
+                <li>80% face coverage, clear & professional</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 2 -->
+      <section id="s2" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 2: Educational Certificates</h3>
+            <p>Degrees, diplomas, trade certificates, and attestation sequence.</p>
+          </div>
+          <div class="pill">Attestation-heavy</div>
+        </header>
+
+        <div class="section-body">
+          <div class="two-col">
+            <div>
+              <details open>
+                <summary>
+                  <div class="sum-left">
+                    <div class="icon">🎓</div>
+                    <div class="sum-title">Degree/Diploma & Trade Certificates</div>
+                  </div>
+                  <div class="chev">⌄</div>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>Original certificates (10th/12th, diploma, ITI)</li>
+                    <li>Trade certificates (welding, electrical, HVAC, etc.)</li>
+                    <li>Vocational training & apprenticeship completion</li>
+                  </ul>
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <div class="sum-left">
+                    <div class="icon">📄</div>
+                    <div class="sum-title">Mark Sheets / Transcripts</div>
+                  </div>
+                  <div class="chev">⌄</div>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>All semesters/years</li>
+                    <li>Original or attested copies</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+
+            <div>
+              <details open>
+                <summary>
+                  <div class="sum-left">
+                    <div class="icon">🧰</div>
+                    <div class="sum-title">Technical / Professional Certifications</div>
+                  </div>
+                  <div class="chev">⌄</div>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>Skill certificates (welding, electrical, HVAC, etc.)</li>
+                    <li>Trade test certificates</li>
+                    <li>Safety training (heights, confined spaces, etc.)</li>
+                    <li>Equipment licenses (forklift, crane, heavy machinery)</li>
+                  </ul>
+                </div>
+              </details>
+
+              <details>
+                <summary>
+                  <div class="sum-left">
+                    <div class="icon">✅</div>
+                    <div class="sum-title">Skill Assessment Certificates</div>
+                  </div>
+                  <div class="chev">⌄</div>
+                </summary>
+                <div class="content">
+                  <ul>
+                    <li>Trade qualification assessments</li>
+                    <li>Competency certifications</li>
+                    <li>Verification from recognized bodies</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="note">
+            <b>Attestation Order (recommended):</b>
+            <p>Notary → State Education Department → MEA → Embassy (destination) → Chamber of Commerce (if needed).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3 -->
+      <section id="s3" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 3: Employment & Experience Documents</h3>
+            <p>Proof of work history, roles, and income.</p>
+          </div>
+          <div class="pill">Career Proof</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧑‍💼</div>
+                <div class="sum-title">Updated Resume / CV</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Employment history with dates & responsibilities</li>
+                <li>Skills/competencies list</li>
+                <li>Contact info (phone, email, address)</li>
+                <li>References included</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🏢</div>
+                <div class="sum-title">Experience Certificates</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Letters from all employers (letterhead + stamp)</li>
+                <li>Job title, duties, dates, contact details</li>
+                <li>Often minimum <b>2 years</b> relevant experience for technical roles</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">💳</div>
+                <div class="sum-title">Salary Slips / Pay Stubs</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Last <b>3–6 months</b> salary slips</li>
+                <li>Bank statements showing salary credits</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">📝</div>
+                <div class="sum-title">Relieving / Termination Letter</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Confirming resignation/completion</li>
+                <li>No dues certificate (if applicable)</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 4 -->
+      <section id="s4" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 4: Legal & Police Clearance</h3>
+            <p>Police clearance and legal status documents.</p>
+          </div>
+          <div class="pill">Mandatory</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">👮</div>
+                <div class="sum-title">Police Clearance Certificate (PCC)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>From country of origin (mandatory)</li>
+                <li>From countries lived in for &gt; 6 months</li>
+                <li>Recent (typically within 6 months)</li>
+                <li>Embassy attestation may be required</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">⚖️</div>
+                <div class="sum-title">Court Clearance (If applicable)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>If any legal/criminal history exists</li>
+                <li>Proof of resolution + character certificate</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🪖</div>
+                <div class="sum-title">Military Service Certificate (If applicable)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Discharge / exemption / no-objection as required</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 5 -->
+      <section id="s5" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 5: Medical & Health Documents</h3>
+            <p>Fitness certificate, tests, vaccination records, insurance.</p>
+          </div>
+          <div class="pill">Validity-sensitive</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🩺</div>
+                <div class="sum-title">Medical Fitness Certificate</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>From government-approved/authorized medical center</li>
+                <li>Validity typically <b>3–6 months</b></li>
+                <li>Full medical exam report included</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧪</div>
+                <div class="sum-title">Medical Tests Required</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Blood tests (CBC, blood group, RH)</li>
+                <li>HIV/AIDS, Hepatitis B/C</li>
+                <li>TB test / chest X-ray</li>
+                <li>Malaria (region-specific), drug screening</li>
+                <li>General physical, vision, hearing</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">💉</div>
+                <div class="sum-title">Vaccination Records</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>COVID-19 certificate (WHO-approved vaccines)</li>
+                <li>Yellow fever (if applicable), Polio, others as required</li>
+                <li>International Certificate of Vaccination (Yellow Card)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🛡️</div>
+                <div class="sum-title">Health Insurance</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Proof of coverage (Europe often requires minimum <b>€30,000</b>)</li>
+                <li>Coverage from date of entry; travel insurance for initial period</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 6 -->
+      <section id="s6" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 6: Employment Offer & Contract</h3>
+            <p>Offer letter, signed contract, demand letter, POA.</p>
+          </div>
+          <div class="pill">Employer-issued</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">📩</div>
+                <div class="sum-title">Job Offer Letter</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Company letterhead + official stamp</li>
+                <li>Job title, salary, benefits, joining date</li>
+                <li>Accommodation/transport details</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧾</div>
+                <div class="sum-title">Employment Contract</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Signed by both parties; terms, salary breakdown, leave</li>
+                <li>Notice/termination clauses; work conditions</li>
+                <li>Translated to worker’s native language (recommended)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">📌</div>
+                <div class="sum-title">Demand Letter / Power of Attorney</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Demand letter: positions, categories, quota details</li>
+                <li>POA: if required by agency; notarized & attested</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 7 -->
+      <section id="s7" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 7: Visa & Immigration Documents</h3>
+            <p>Work visa/permit, forms, sponsorship, receipts.</p>
+          </div>
+          <div class="pill">Match passport</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧷</div>
+                <div class="sum-title">Work Visa / Permit Approval</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Original visa or approval number</li>
+                <li>Validity dates clearly mentioned</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🗂️</div>
+                <div class="sum-title">Visa Application Forms</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Completed & signed; accurate information</li>
+                <li>Must match passport + job offer details</li>
+                <li>Emergency contact included</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🏷️</div>
+                <div class="sum-title">Sponsorship / Invitation / Receipts</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>CoS reference (UK/Europe) if applicable</li>
+                <li>Invitation letter from employer if required</li>
+                <li>Visa fee receipts, tracking numbers</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 8 -->
+      <section id="s8" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 8: Financial Documents</h3>
+            <p>Statements, taxes, proof of funds, undertakings.</p>
+          </div>
+          <div class="pill">Bank-ready</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🏦</div>
+                <div class="sum-title">Bank Statements (3–6 months)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Regular transactions; salary credits if applicable</li>
+                <li>Minimum balance requirements if specified</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧮</div>
+                <div class="sum-title">Income Tax Returns (If applicable)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Last 2–3 years</li>
+                <li>Assessment orders / Form 16 or equivalent</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">💷</div>
+                <div class="sum-title">Proof of Funds / Undertaking</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Maintenance funds if required (example: UK often references £1,270)</li>
+                <li>Solvency certificate; sponsor/family undertaking if needed</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 9 -->
+      <section id="s9" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 9: Emigration & Clearance (India-Specific)</h3>
+            <p>For ECR passport holders and Gulf requirements.</p>
+          </div>
+          <div class="pill">India only</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧾</div>
+                <div class="sum-title">Emigration Clearance Certificate (ECR)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Protector of Emigrants office / eMigrate portal</li>
+                <li>Emigration clearance stamp in passport</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧬</div>
+                <div class="sum-title">GAMCA / GCC Medical (Middle East)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Mandatory for GCC countries; done at approved centers</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 10 -->
+      <section id="s10" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 10: Travel Documents</h3>
+            <p>Tickets, insurance, accommodation address, transit visas.</p>
+          </div>
+          <div class="pill">Before departure</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">✈️</div>
+                <div class="sum-title">Flight Tickets & Itinerary</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>E-ticket printout + itinerary details</li>
+                <li>Paid by employer or self (as per contract)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🏨</div>
+                <div class="sum-title">Accommodation Address + Transit Visa</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Company housing details or hotel booking (initial days)</li>
+                <li>Transit/layover visa if required</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 11 -->
+      <section id="s11" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 11: Family-Related Documents (If Applicable)</h3>
+            <p>For dependent visas or family verification.</p>
+          </div>
+          <div class="pill">Optional</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">💍</div>
+                <div class="sum-title">Marriage Certificate</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Attested and translated as required</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">👨‍👩‍👧</div>
+                <div class="sum-title">Children’s Birth Certificates</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>School certificates, vaccination records (if applicable)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🧷</div>
+                <div class="sum-title">NOC / Family Status Declaration</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>No Objection Certificate from spouse if required</li>
+                <li>Dependent info + marital status proof</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 12 -->
+      <section id="s12" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 12: Employer/Company Documents (For Reference)</h3>
+            <p>Documents you may ask employer/agency to show for verification.</p>
+          </div>
+          <div class="pill">Verify offer</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🏛️</div>
+                <div class="sum-title">Company Registration & Licenses</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Commercial registration, business license</li>
+                <li>Chamber of Commerce membership</li>
+                <li>Tax compliance certificates</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🦺</div>
+                <div class="sum-title">Project & Safety/Insurance Documents</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Project contracts, site permits</li>
+                <li>Quota allocation / labor approvals</li>
+                <li>Workers’ compensation / medical / accident insurance</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 13 -->
+      <section id="s13" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 13: Additional Requirements by Region</h3>
+            <p>Extra documents that vary by destination region.</p>
+          </div>
+          <div class="pill">Region-based</div>
+        </header>
+        <div class="section-body">
+          <div class="two-col">
+            <details open>
+              <summary>
+                <div class="sum-left">
+                  <div class="icon">🌙</div>
+                  <div class="sum-title">Middle East (UAE, KSA, Qatar, Kuwait, Oman, Bahrain)</div>
+                </div>
+                <div class="chev">⌄</div>
+              </summary>
+              <div class="content">
+                <ul>
+                  <li>GAMCA/GCC medical (mandatory)</li>
+                  <li>Arabic translation of key documents</li>
+                  <li>Embassy + MOFA attestations</li>
+                  <li>Specific trade licenses (electrician, driving categories)</li>
+                  <li>Biometric registration; NOC if changing sponsors</li>
+                </ul>
+              </div>
+            </details>
+
+            <details open>
+              <summary>
+                <div class="sum-left">
+                  <div class="icon">🇪🇺</div>
+                  <div class="sum-title">Europe (Germany, UK, Poland, Czech Republic)</div>
+                </div>
+                <div class="chev">⌄</div>
+              </summary>
+              <div class="content">
+                <ul>
+                  <li>Language proficiency proof (if required)</li>
+                  <li>Credential recognition (Anabin / ENIC-NARIC)</li>
+                  <li>ZAB recognition (Germany) for degrees</li>
+                  <li>CoS for UK; TB test for UK (for listed countries)</li>
+                  <li>Apostille (Hague Convention countries)</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🌏</div>
+                <div class="sum-title">South Asia (Singapore, Malaysia)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>Skills certification by national training boards</li>
+                <li>Trade test certification</li>
+                <li>Biometric work permit card application</li>
+                <li>Singapore MOM approval; security bond (some categories)</li>
+                <li>Pre-departure orientation training certificate</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SECTION 14 -->
+      <section id="s14" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 14: Document Preparation Timeline</h3>
+            <p>Typical time estimates (varies by country and workload).</p>
+          </div>
+          <div class="pill">Planning</div>
+        </header>
+
+        <div class="section-body">
+          <div class="table-wrap" role="region" aria-label="Document preparation timeline table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Document/Process</th>
+                  <th>Estimated Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Passport application/renewal</td><td>2–4 weeks</td></tr>
+                <tr><td>Police clearance certificate (PCC)</td><td>1–3 weeks</td></tr>
+                <tr><td>Medical exam & fitness certificate</td><td>1–2 weeks</td></tr>
+                <tr><td>Educational certificate attestation</td><td>4–8 weeks</td></tr>
+                <tr><td>Embassy attestation</td><td>2–4 weeks</td></tr>
+                <tr><td>Emigration clearance (ECR) (India)</td><td>1–2 weeks</td></tr>
+                <tr><td>Visa processing (after submission)</td><td>2–8 weeks</td></tr>
+                <tr><td><b>Total preparation time</b></td><td><b>8–16 weeks</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="note">
+            <b>Tip:</b>
+            <p>Start early and track each application with submission date + reference number.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 15 -->
+      <section id="s15" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 15: Important Reminders & Best Practices</h3>
+            <p>Simple habits that prevent delays and rejections.</p>
+          </div>
+          <div class="pill">Do this</div>
+        </header>
+        <div class="section-body">
+          <ul class="mini-list">
+            <li>Start early (3–4 months)</li>
+            <li>Keep 4–6 photocopies of all documents</li>
+            <li>Digital backup: scan & store in cloud</li>
+            <li>Organize in labeled folders</li>
+            <li>Check validity of passport/PCC/medical</li>
+            <li>Verify requirements with employer/agency/embassy</li>
+            <li>Attestation order: Notary → State → MEA → Embassy</li>
+            <li>Use certified translators</li>
+            <li>Keep originals safe during travel</li>
+            <li>Beware of fraud; use licensed agencies only</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SECTION 16 -->
+      <section id="s16" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 16: Common Mistakes to Avoid</h3>
+            <p>Most frequent reasons for rework and delay.</p>
+          </div>
+          <div class="pill">Avoid</div>
+        </header>
+        <div class="section-body">
+          <ul class="mini-list">
+            <li>Submitting expired passport/PCC/medical</li>
+            <li>Wrong attestation sequence or missing stamps</li>
+            <li>Photo not matching biometric rules</li>
+            <li>Incomplete employment contract</li>
+            <li>Missing pages in copies</li>
+            <li>Name spelling variations across documents</li>
+            <li>Unauthorized medical centers</li>
+            <li>Forgetting originals during travel</li>
+            <li>Not obtaining emigration clearance (ECR where required)</li>
+            <li>Paying unregistered agents</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SECTION 17 -->
+      <section id="s17" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 17: Verification Checklist (48 Hours Before Departure)</h3>
+            <p>Final quick check to avoid airport/immigration issues.</p>
+          </div>
+          <div class="pill">48h</div>
+        </header>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="note">
+              <b>Carry on you:</b>
+              <p>Passport, visa, contract, medical + PCC, tickets, insurance, employer contacts.</p>
+            </div>
+            <div class="note">
+              <b>Keep separate bag:</b>
+              <p>Photocopies + digital copies (phone/email). Originals separate from copies.</p>
+            </div>
+          </div>
+
+          <ul class="mini-list">
+            <li>Passport (min 6 months validity)</li>
+            <li>Work visa stamped / approval</li>
+            <li>Signed employment contract</li>
+            <li>Medical fitness certificate (valid)</li>
+            <li>PCC (recent)</li>
+            <li>Educational + experience certificates (originals + attested copies)</li>
+            <li>Flight tickets confirmed</li>
+            <li>Travel insurance active</li>
+            <li>Accommodation address ready</li>
+            <li>Emergency contacts saved</li>
+            <li>Funds for initial expenses</li>
+            <li>Vaccination certificates</li>
+            <li>Emigration clearance stamp (if ECR)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SECTION 18 -->
+      <section id="s18" class="section">
+        <header class="section-header">
+          <div>
+            <h3>Section 18: Resources & Disclaimer</h3>
+            <p>Official portals + final notes (keep links editable in your CMS).</p>
+          </div>
+          <div class="pill">Official</div>
+        </header>
+        <div class="section-body">
+          <details open>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">🔗</div>
+                <div class="sum-title">Government Portals (examples)</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <ul>
+                <li>India eMigrate: https://emigrate.gov.in</li>
+                <li>India MEA: https://www.mea.gov.in</li>
+                <li>Saudi visa portal: https://visa.mofa.gov.sa</li>
+                <li>Germany work visa info: https://www.make-it-in-germany.com</li>
+                <li>UK visas: https://www.gov.uk/browse/visas-immigration</li>
+              </ul>
+              <p style="margin-top:10px;">(You can replace these with your own curated links per country.)</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="sum-left">
+                <div class="icon">⚠️</div>
+                <div class="sum-title">Disclaimer</div>
+              </div>
+              <div class="chev">⌄</div>
+            </summary>
+            <div class="content">
+              <p>
+                This checklist is compiled from general requirements across major destination countries for overseas blue-collar and technical employment
+                as of <b>March 2026</b>. Requirements may vary by destination, job category, employer, bilateral agreements, and policy changes.
+                Always verify using official government portals, your recruitment agency, and the destination country embassy.
+              </p>
+              <p style="margin-top:10px;">
+                <b>Legal Notice:</b> Engage only with licensed and registered recruitment agencies. Verify agent registration before payments.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+    </section>
+  </main>
+</body>
+</html>

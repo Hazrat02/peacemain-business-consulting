@@ -24,7 +24,7 @@
         <ul class="topbar-right">
           <li>Mon-Fri (10:30AM - 6:00PM)</li>
           <li>
-            <a href="mailto:info@peacemain.com">
+            <a :href="`mailto:${contactInfo.email}`">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -37,11 +37,11 @@
                   />
                 </g>
               </svg>
-              <span class="__cf_email__">info@peacemain.com</span>
+              <span class="__cf_email__">{{ contactInfo.email }}</span>
             </a>
           </li>
           <li>
-            <a href="tel:+918123781857">
+            <a :href="`tel:${contactInfo.phone}`">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -54,7 +54,7 @@
                   />
                 </g>
               </svg>
-              +91-8123781857
+              {{ contactInfo.phone }}
             </a>
           </li>
         </ul>
@@ -67,7 +67,7 @@
               style="width: 250px"
               alt="image"
               class="img-fluid"
-              src="./../assets/frontend/img/logo1.png"
+              :src="logoUrl"
           /></router-link>
         </div>
         <div class="menu-wrap">
@@ -77,50 +77,24 @@
             >
               <div class="mobile-logo-wrap">
                 <router-link to="/"
-                  ><img alt="image" src="./../assets/frontend/img/logo1.png"
+                  ><img alt="image" :src="logoUrl"
                 /></router-link>
               </div>
             </div>
             <ul class="menu-list">
               <li
                 class=""
+                v-for="(item, idx) in sidebarLinks"
+                :key="`top-link-${idx}`"
                 :class="{
-                  active: this.$route.path === '/',
+                  active: !isExternalUrl(item.url) && this.$route.path === item.url,
                 }"
               >
-                <router-link class="drop-down" to="/">Home</router-link>
-              </li>
-              <li
-                class=""
-                :class="{
-                  active: this.$route.path === '/servics',
-                }"
-              >
-                <router-link class="drop-down" to="/servics"
-                  >Services</router-link
-                >
-              </li>
-              <li
-                class=""
-                :class="{
-                  active: this.$route.path === '/about',
-                }"
-              >
-                <router-link class="drop-down" to="/about"
-                  >About Us</router-link
-                >
-              </li>
-              <li
-                :class="{
-                  active: this.$route.path === '/contact',
-                }"
-              >
-                <router-link class="drop-down" to="/contact"
-                  >Contact Us</router-link
-                >
+                <a v-if="isExternalUrl(item.url)" class="drop-down" :href="item.url" target="_blank" rel="noopener noreferrer">{{ item.label }}</a>
+                <router-link v-else class="drop-down" :to="item.url">{{ item.label }}</router-link>
               </li>
 
-              <li class="menu-item-has-children">
+              <li class="menu-item-has-children d-none d-md-inline-block">
                 <a href="#" class="drop-down">More</a
                 ><i class="fa fa-caret-down"></i>
                 <ul class="sub-menu">
@@ -150,7 +124,7 @@
               <ul class="topbar-right">
                 <li>Mon-Fri (10:30AM - 6:00PM)</li>
                 <li>
-                  <a href="mailto:info@peacemain.com">
+                  <a :href="`mailto:${contactInfo.email}`">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"
@@ -163,11 +137,11 @@
                         />
                       </g>
                     </svg>
-                    <span class="__cf_email__">info@peacemain.com</span>
+                    <span class="__cf_email__">{{ contactInfo.email }}</span>
                   </a>
                 </li>
                 <li>
-                  <a href="tel:+918123781857">
+                  <a :href="`tel:${contactInfo.phone}`">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"
@@ -180,7 +154,7 @@
                         />
                       </g>
                     </svg>
-                    +91-8123781857
+                    {{ contactInfo.phone }}
                   </a>
                 </li>
               </ul>
@@ -275,7 +249,7 @@
                       <div class="footer-logo">
                         <router-link to="/"
                           ><img
-                            src="./../assets/frontend/img/logo1.png"
+                            :src="logoUrl"
                             alt="footer-logo"
                         /></router-link>
                       </div>
@@ -303,7 +277,7 @@
                         <div class="content">
                           <span>To More Inquiry</span>
                           <h6>
-                            <a href="tel:+990737621432"> +91-8123781857 </a>
+                            <a :href="`tel:${contactInfo.phone}`"> {{ contactInfo.phone }} </a>
                           </h6>
                         </div>
                       </div>
@@ -335,7 +309,7 @@
                         <div class="content">
                           <span>To Send Mail</span>
                           <h6>
-                            <a href="mailto:info@peacemain.com">
+                            <a :href="`mailto:${contactInfo.email}`">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="14"
@@ -348,9 +322,7 @@
                                   />
                                 </g>
                               </svg>
-                              <span class="__cf_email__"
-                                >info@peacemain.com</span
-                              >
+                              <span class="__cf_email__">{{ contactInfo.email }}</span>
                             </a>
                           </h6>
                         </div>
@@ -445,7 +417,8 @@
 import axios from "axios";
 import { isAuthenticated, logout } from "./../middleware/index";
 import { useAuthUserStore } from "./../stores/user";
-import router from "@/router";
+
+const defaultLogoUrl = new URL("../assets/frontend/img/logo1.png", import.meta.url).href;
 
 export default {
   components: {},
@@ -454,6 +427,17 @@ export default {
       authUser: "",
       showSidebar: false,
       faqId: 1,
+      sidebarLinks: [
+        { label: "Home", url: "/" },
+        { label: "Services", url: "/servics" },
+        { label: "About Us", url: "/about" },
+        { label: "Contact Us", url: "/contact" },
+      ],
+      contactInfo: {
+        phone: "+91-8123781857",
+        email: "info@peacemain.com",
+      },
+      logoUrl: defaultLogoUrl,
     };
   },
   computed: {
@@ -490,9 +474,94 @@ export default {
     } else {
       this.authUser = "";
     }
+
+    axios
+      .get("/api/content/sidebar")
+      .then((response) => {
+        const rows = response?.data?.data || [];
+        if (Array.isArray(rows) && rows.length) {
+          this.sidebarLinks = rows
+            .filter((item) => (item.status || "Active") === "Active")
+            .map((item) => ({
+              ...item,
+              url: this.normalizeSidebarUrl(item.url),
+            }))
+            .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+        }
+      })
+      .catch(() => {});
+
+    axios
+      .get("/api/content/contact-info")
+      .then((response) => {
+        const row = response?.data?.data || null;
+        if (row) {
+          this.contactInfo = row;
+        }
+      })
+      .catch(() => {});
+
+    axios
+      .get("/api/content/general-settings")
+      .then((response) => {
+        const row = response?.data?.data || null;
+        const logo = row?.logo_url || "";
+        if (logo) {
+          this.logoUrl = this.resolveAssetUrl(logo);
+        }
+      })
+      .catch(() => {});
   },
 
   methods: {
+    resolveAssetUrl(path) {
+      if (!path) {
+        return defaultLogoUrl;
+      }
+
+      if (/^https?:\/\//i.test(path)) {
+        return path;
+      }
+
+      if (path.startsWith("/")) {
+        const apiBase = axios.defaults.baseURL || "";
+        const backendOrigin = apiBase ? new URL(apiBase).origin : window.location.origin;
+        return `${backendOrigin}${path}`;
+      }
+
+      return path;
+    },
+    isExternalUrl(url) {
+      return /^(https?:\/\/|mailto:|tel:)/i.test((url || "").trim());
+    },
+    normalizeSidebarUrl(url) {
+      const value = (url || "").trim();
+      if (!value) {
+        return "/";
+      }
+
+      if (this.isExternalUrl(value)) {
+        return value;
+      }
+
+      if (/^https?:\/(?!\/)/i.test(value)) {
+        return value.replace(/^https?:\//i, (match) => `${match}/`);
+      }
+
+      if (/^https?\/\//i.test(value)) {
+        return value.replace(/^https?/i, (match) => `${match}:`);
+      }
+
+      if (/^(www\.|wa\.me\/|[a-z0-9.-]+\.[a-z]{2,}(\/|$))/i.test(value)) {
+        return `https://${value.replace(/^\/+/, "")}`;
+      }
+
+      if (value.startsWith("/")) {
+        return value;
+      }
+
+      return `/${value}`;
+    },
     faq(id) {
       if (id === this.faqId) {
         this.faqId = 0;

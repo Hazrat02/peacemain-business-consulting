@@ -1,6 +1,7 @@
 <script>
 import HomeLayout from "./../Layouts/HomeLayout.vue";
 import lineChart from "./../components/lineChart.vue";
+import axios from "axios";
 
 import { Carousel, Slide } from "vue3-carousel";
 
@@ -34,8 +35,40 @@ export default {
       carouselTransition: "animated fadeIn", // Name of the transition class
       doAutoplay: true,
       cryptoData: "",
-
-      slides: [bannerImage, bannerImage2, bannerImage3, bannerImage4],
+      banners: [
+        {
+          title: "Unlocking Your Business's Potential With Innovate Consulting.",
+          description:
+            "The primary goal of business consulting is to help organizations improve their performance, solve specific problems, and achieve their strategic objectives.",
+          button_text: "Contact Us",
+          button_url: "/contact",
+          image_url: bannerImage,
+        },
+        {
+          title: "Unlocking Your Business's Potential With Innovate Consulting.",
+          description:
+            "The primary goal of business consulting is to help organizations improve their performance, solve specific problems, and achieve their strategic objectives.",
+          button_text: "Contact Us",
+          button_url: "/contact",
+          image_url: bannerImage2,
+        },
+        {
+          title: "Unlocking Your Business's Potential With Innovate Consulting.",
+          description:
+            "The primary goal of business consulting is to help organizations improve their performance, solve specific problems, and achieve their strategic objectives.",
+          button_text: "Contact Us",
+          button_url: "/contact",
+          image_url: bannerImage3,
+        },
+        {
+          title: "Unlocking Your Business's Potential With Innovate Consulting.",
+          description:
+            "The primary goal of business consulting is to help organizations improve their performance, solve specific problems, and achieve their strategic objectives.",
+          button_text: "Contact Us",
+          button_url: "/contact",
+          image_url: bannerImage4,
+        },
+      ],
       testimonials: [
         {
           image: testimonial,
@@ -131,6 +164,9 @@ export default {
   },
 
   methods: {
+    isExternalUrl(url) {
+      return /^https?:\/\//i.test(url || "");
+    },
     nextSlide() {
       this.$refs.carouselRef.next();
 
@@ -148,7 +184,31 @@ export default {
   },
 
   created() {
-    // this.$toast.error("This is a success notification from SomeComponent!");
+    axios
+      .get("/api/content/banner")
+      .then((response) => {
+        const rows = response?.data?.data || [];
+        if (Array.isArray(rows) && rows.length) {
+          const fallbackImages = [bannerImage, bannerImage2, bannerImage3, bannerImage4];
+          const mapped = rows.map((item, index) => ({
+            title: item?.title || "Unlocking Your Business's Potential With Innovate Consulting.",
+            description:
+              item?.description ||
+              "The primary goal of business consulting is to help organizations improve their performance, solve specific problems, and achieve their strategic objectives.",
+            button_text: item?.button_text || "Contact Us",
+            button_url: item?.button_url || "/contact",
+            image_url: item?.image_url || fallbackImages[index % fallbackImages.length],
+            status: item?.status || "Active",
+            sort_order: item?.sort_order || index + 1,
+          }))
+            .filter((item) => (item.status || "Active") === "Active")
+            .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+          if (mapped.length) {
+            this.banners = mapped;
+          }
+        }
+      })
+      .catch(() => {});
   },
 };
 </script>
@@ -164,11 +224,11 @@ export default {
         :mouse-drag="false"
         :transition="1"
       >
-        <Slide v-for="(slide, index) in slides" :key="index">
+        <Slide v-for="(banner, index) in banners" :key="index">
           <div
             class="banner-wrapper"
             :style="{
-              backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(${slide})`,
+              backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(${banner.image_url})`,
             }"
           >
             <div class="container-fluid one pl--95">
@@ -177,14 +237,35 @@ export default {
                   <div class="banner-left-content">
                     <!-- <span>Real Estate</span> -->
                     <h1>
-                      Unlocking Your Business's Potential With Innovate
-                      Consulting.
+                      {{ banner.title }}
                     </h1>
-                    <router-link to="/contact"
+                    <a
+                      v-if="isExternalUrl(banner.button_url)"
+                      :href="banner.button_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="primary-btn1 btn-hover"
+                    >
+                      {{ banner.button_text || "Contact Us" }}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M10.1865 1.06237L0 11.2484L0.751627 12L10.9376 1.81347V8.85645H12V0H3.14355V1.06237H10.1865Z"
+                        ></path>
+                      </svg>
+                      <span style="top: 240.594px; left: 153.5px"></span>
+                    </a>
+                    <router-link v-else :to="banner.button_url || '/contact'"
                       class="primary-btn1 btn-hover"
                       href="service-details.html"
                     >
-                      Contact Us
+                      {{ banner.button_text || "Contact Us" }}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -204,9 +285,7 @@ export default {
                 <div class="col-lg-5 d-flex align-items-end">
                   <div class="banner-right-content pl--95">
                     <h5>
-                      The primary goal of business consulting is to help
-                      organizations improve their performance, solve specific
-                      problems, and achieve their strategic objectives.
+                      {{ banner.description }}
                     </h5>
                     <ul class="btn-group">
                       <li class="success-rate">
