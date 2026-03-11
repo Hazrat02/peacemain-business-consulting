@@ -378,7 +378,7 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Hazrat ali\\Desktop\\India\\Peacemain\\backend\\storage\\app/public',
+        'root' => 'C:\\Users\\Hazrat ali\\Desktop\\India\\Peacemain\\backend\\public\\storage',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,

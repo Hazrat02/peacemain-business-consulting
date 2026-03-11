@@ -23,6 +23,8 @@ Route::get('/', function () {
     return redirect()->route('user.dashboard');
 })->name('home');
 
+Route::get('/optimize-clear', [AdminDashboardController::class, 'optimizeClear'])->name('optimize-clear');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [TokenAuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [TokenAuthController::class, 'webLogin'])->name('login.submit');
@@ -61,6 +63,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/contact-us/{contact}/reply', [AdminDashboardController::class, 'contactReply'])->name('admin.contact-us.reply');
     Route::post('/contact-us/{contact}/reply', [AdminDashboardController::class, 'sendContactReply'])->name('admin.contact-us.reply.send');
     Route::get('/roles', [AdminDashboardController::class, 'roles'])->name('admin.roles');
+    Route::patch('/roles/{user}/promote', [AdminDashboardController::class, 'promoteToAdmin'])->name('admin.roles.promote');
     Route::get('/content/banner', [AdminDashboardController::class, 'contentBanner'])->name('admin.content.banner');
     Route::get('/content/sidebar', [AdminDashboardController::class, 'contentSidebar'])->name('admin.content.sidebar');
     Route::get('/content/faq', [AdminDashboardController::class, 'contentFaq'])->name('admin.content.faq');

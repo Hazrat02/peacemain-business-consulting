@@ -5,15 +5,10 @@ import { createApp, h } from 'vue';
 import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import * as bootstrap from 'bootstrap';
-import feather from 'feather-icons';
-import SimpleBar from 'simplebar';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 
 window.bootstrap = bootstrap;
-window.feather = feather;
-
-let layoutInitialized = false;
 let lastToastSignature = '';
 
 const toaster = new Notyf({
@@ -21,60 +16,6 @@ const toaster = new Notyf({
     position: { x: 'right', y: 'top' },
     dismissible: true,
 });
-
-const initializeSidebarToggle = () => {
-    if (layoutInitialized) {
-        return;
-    }
-
-    document.addEventListener('click', (event) => {
-        const toggle = event.target.closest('.js-sidebar-toggle');
-        if (!toggle) {
-            return;
-        }
-
-        event.preventDefault();
-
-        const sidebar = document.querySelector('.js-sidebar');
-        if (!sidebar) {
-            return;
-        }
-
-        sidebar.classList.toggle('collapsed');
-        sidebar.addEventListener(
-            'transitionend',
-            () => window.dispatchEvent(new Event('resize')),
-            { once: true }
-        );
-    });
-
-    layoutInitialized = true;
-};
-
-const initializeSimplebar = () => {
-    document.querySelectorAll('.js-simplebar').forEach((element) => {
-        if (element.dataset.simplebarInitialized === 'true') {
-            return;
-        }
-
-        new SimpleBar(element);
-        element.dataset.simplebarInitialized = 'true';
-    });
-};
-
-const refreshFeatherIcons = () => {
-    if (typeof window !== 'undefined' && window.feather?.replace) {
-        window.requestAnimationFrame(() => {
-            window.feather.replace();
-        });
-    }
-};
-
-const initializeLayout = () => {
-    initializeSidebarToggle();
-    initializeSimplebar();
-    refreshFeatherIcons();
-};
 
 const getFirstErrorMessage = (errors) => {
     if (!errors || typeof errors !== 'object') {
@@ -114,7 +55,6 @@ const showToastsFromPage = (page) => {
     }
 };
 
-router.on('navigate', initializeLayout);
 router.on('success', (event) => showToastsFromPage(event.detail.page));
 
 createInertiaApp({
@@ -125,7 +65,6 @@ createInertiaApp({
             .use(plugin)
             .mount(el);
 
-        initializeLayout();
         showToastsFromPage(props.initialPage);
 
         return app;

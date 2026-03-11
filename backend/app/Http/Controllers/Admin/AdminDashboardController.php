@@ -10,6 +10,7 @@ use App\Services\DocumentChecklistService;
 use App\Support\SiteContentDefaults;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -32,6 +33,24 @@ class AdminDashboardController extends Controller
                 ->limit(6)
                 ->get(['id', 'full_name', 'email', 'country', 'is_admin']),
         ]);
+    }
+
+    public function optimizeClear(): RedirectResponse
+    {
+        try {
+            Artisan::call('optimize:clear');
+            Artisan::call('optimize');
+
+            return redirect()->route('admin.dashboard')->with('status', 'Application cache cleared and optimized successfully.');
+        } catch (\Throwable $exception) {
+            Log::error('Optimize clear route failed', [
+                'error' => $exception->getMessage(),
+            ]);
+
+            return redirect()->route('admin.dashboard')->withErrors([
+                'general' => 'Unable to clear and optimize application cache right now.',
+            ]);
+        }
     }
 
     public function users(Request $request, DocumentChecklistService $service): Response
@@ -253,11 +272,44 @@ class AdminDashboardController extends Controller
     {
         return Inertia::render('Admin/Roles', [
             'roles' => [
-                ['name' => 'Super Admin', 'users' => 1, 'permissions' => 'All access'],
-                ['name' => 'Manager', 'users' => 2, 'permissions' => 'Users, Content, Contact'],
-                ['name' => 'Editor', 'users' => 3, 'permissions' => 'Content only'],
+                [
+                    'name' => 'Admin',
+                    'users' => User::where('is_admin', true)->count(),
+                    'permissions' => 'Full admin panel access',
+                ],
+                [
+                    'name' => 'User',
+                    'users' => User::where('is_admin', false)->count(),
+                    'permissions' => 'User dashboard access',
+                ],
             ],
+            'admins' => User::query()
+                ->where('is_admin', true)
+                ->latest('id')
+                ->get(['id', 'full_name', 'email', 'phone', 'country', 'profile_image']),
+            'users' => User::query()
+                ->where('is_admin', false)
+                ->latest('id')
+                ->limit(200)
+                ->get(['id', 'full_name', 'email', 'phone', 'country']),
         ]);
+    }
+
+    public function promoteToAdmin(User $user): RedirectResponse
+    {
+        if ($user->is_admin) {
+            return back()->withErrors(['user' => 'This user is already an admin.']);
+        }
+
+        if ($user->is_banned) {
+            return back()->withErrors(['user' => 'Banned users cannot be promoted to admin.']);
+        }
+
+        $user->update([
+            'is_admin' => true,
+        ]);
+
+        return back()->with('status', 'User promoted to admin successfully.');
     }
 
     public function contentBanner(): Response

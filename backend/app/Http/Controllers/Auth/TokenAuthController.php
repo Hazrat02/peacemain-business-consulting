@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\SiteContent;
 use App\Models\User;
+use App\Support\SiteContentDefaults;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -60,14 +63,7 @@ class TokenAuthController extends Controller
             ]
         );
 
-        try {
-            Mail::raw(
-                "Your password reset code is {$code}. It expires in 15 minutes.",
-                function ($message) use ($data): void {
-                    $message->to($data['email'])->subject('Your Password Reset Code');
-                }
-            );
-        } catch (Throwable) {
+        if (! $this->sendPasswordResetCodeMail($user, $code)) {
             return back()->withErrors([
                 'email' => 'Unable to send reset code email right now.',
             ]);
@@ -285,14 +281,7 @@ class TokenAuthController extends Controller
             ]
         );
 
-        try {
-            Mail::raw(
-                "Your password reset code is {$code}. It expires in 15 minutes.",
-                function ($message) use ($data): void {
-                    $message->to($data['email'])->subject('Your Password Reset Code');
-                }
-            );
-        } catch (Throwable) {
+        if (! $this->sendPasswordResetCodeMail($user, $code)) {
             return response()->json([
                 'message' => 'Unable to send reset code email right now.',
             ], 500);
@@ -367,5 +356,83 @@ class TokenAuthController extends Controller
         return response()->json([
             'message' => 'Password reset successfully.',
         ]);
+    }
+
+    private function sendPasswordResetCodeMail(User $user, string $code): bool
+    {
+        $smtp = $this->value('smtp_settings', SiteContentDefaults::smtpSettings());
+
+        if (empty($smtp['host']) || empty($smtp['port']) || empty($smtp['from_email'])) {
+            return false;
+        }
+
+        config([
+            'mail.default' => 'smtp',
+            'mail.mailers.smtp.transport' => 'smtp',
+            'mail.mailers.smtp.host' => $smtp['host'],
+            'mail.mailers.smtp.port' => (int) $smtp['port'],
+            'mail.mailers.smtp.username' => $smtp['username'] ?? '',
+            'mail.mailers.smtp.password' => $smtp['password'] ?? '',
+            'mail.mailers.smtp.encryption' => ($smtp['encryption'] ?? 'tls') === 'none' ? null : ($smtp['encryption'] ?? 'tls'),
+            'mail.from.address' => $smtp['from_email'],
+            'mail.from.name' => $smtp['from_name'] ?: 'PEACEMAIN',
+        ]);
+
+        $subject = 'Your Password Reset Code';
+        $template = $smtp['mail_template_html'] ?? '';
+
+        if (! $template) {
+            $template = '<div style="font-family:Arial,sans-serif;padding:24px"><h2>Password Reset</h2><p>Hello [[name]],</p><p>Your password reset code is <strong>[[code]]</strong>.</p><p>This code expires in 15 minutes.</p><p>Regards,<br>[[from_name]]</p></div>';
+        }
+
+        $name = $user->full_name ?: $user->name ?: 'User';
+        $message = 'Your password reset code is <strong>' . e($code) . '</strong>. It expires in 15 minutes.';
+        $values = [
+            $name,
+            $user->email,
+            e($code),
+            $message,
+            $message,
+            $subject,
+            $smtp['from_name'] ?: 'PEACEMAIN',
+        ];
+
+        $html = str_replace(
+            ['[[name]]', '[[email]]', '[[code]]', '[[message]]', '[[welcome_message]]', '[[subject]]', '[[from_name]]'],
+            $values,
+            $template
+        );
+        $html = str_replace(
+            ['{{name}}', '{{email}}', '{{code}}', '{{message}}', '{{welcome_message}}', '{{subject}}', '{{from_name}}'],
+            $values,
+            $html
+        );
+
+        if (! str_contains($html, e($code))) {
+            $html .= '<p style="font-family:Arial,sans-serif;padding:0 24px 24px;margin:0;">Reset code: <strong>' . e($code) . '</strong></p>';
+        }
+
+        try {
+            Mail::html($html, function ($mailMessage) use ($user, $subject): void {
+                $mailMessage->to($user->email)->subject($subject);
+            });
+
+            return true;
+        } catch (Throwable $exception) {
+            Log::error('Password reset code mail send failed', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'error' => $exception->getMessage(),
+            ]);
+
+            return false;
+        }
+    }
+
+    private function value(string $key, mixed $default): mixed
+    {
+        $record = SiteContent::query()->where('key', $key)->first();
+
+        return $record?->value ?? $default;
     }
 }
